@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlClass id="class" name="FreeBulkPositions40CADE3B9ECF4B65B6CDED97E1515B57Data" package="org.openbravo.erpWindows.org.openz.customerassets.CustomerAssetsOverview">
+  <SqlClassComment>WAD Generated class</SqlClassComment>
+
+  <SqlMethod name="selectEdit" type="preparedStatement" return="multiple">
+    <SqlMethodComment>Select for edit</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT to_char(ca_freebulkpositions_v.Created, ?) as created, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = ca_freebulkpositions_v.CreatedBy) as CreatedByR, 
+        to_char(ca_freebulkpositions_v.Updated, ?) as updated, 
+        to_char(ca_freebulkpositions_v.Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp,  
+        ca_freebulkpositions_v.UpdatedBy, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = ca_freebulkpositions_v.UpdatedBy) as UpdatedByR,
+        ca_freebulkpositions_v.AD_Org_ID, 
+(CASE WHEN ca_freebulkpositions_v.AD_Org_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table1.Name), ''))),'') ) END) AS AD_Org_IDR, 
+ca_freebulkpositions_v.M_Product_ID, 
+(CASE WHEN ca_freebulkpositions_v.M_Product_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table2.Value), ''))),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR((CASE WHEN tableTRL2.Name IS NULL THEN TO_CHAR(table2.Name) ELSE TO_CHAR(tableTRL2.Name) END)), ''))),'') ) END) AS M_Product_IDR, 
+ca_freebulkpositions_v.Freeqty, 
+ca_freebulkpositions_v.M_Warehouse_ID, 
+(CASE WHEN ca_freebulkpositions_v.M_Warehouse_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table3.Name), ''))),'') ) END) AS M_Warehouse_IDR, 
+COALESCE(ca_freebulkpositions_v.Isactive, 'N') AS Isactive, 
+ca_freebulkpositions_v.C_Uom_ID, 
+ca_freebulkpositions_v.AD_Client_ID, 
+ca_freebulkpositions_v.CA_Freebulkpositions_V_ID, 
+ 
+        ? AS LANGUAGE 
+        FROM ca_freebulkpositions_v left join (select AD_Org_ID, Name from AD_Org) table1 on (ca_freebulkpositions_v.AD_Org_ID = table1.AD_Org_ID) left join (select M_Product_ID, Value, Name from M_Product) table2 on (ca_freebulkpositions_v.M_Product_ID = table2.M_Product_ID) left join (select M_Product_ID,AD_Language, Name from M_Product_TRL) tableTRL2 on (table2.M_Product_ID = tableTRL2.M_Product_ID and tableTRL2.AD_Language = ?)  left join (select M_Warehouse_ID, Name from M_Warehouse) table3 on (ca_freebulkpositions_v.M_Warehouse_ID = table3.M_Warehouse_ID)
+        WHERE 2=2 
+
+        AND 1=1 
+        AND ca_freebulkpositions_v.CA_Freebulkpositions_V_ID = ? 
+        AND ca_freebulkpositions_v.AD_Client_ID IN ('1') 
+           AND ca_freebulkpositions_v.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="dateTimeFormat"></Parameter>
+    <Parameter name="dateTimeFormat"></Parameter>
+    
+    <Parameter name="paramLanguage"></Parameter>
+<Parameter name="paramLanguage"/>
+
+
+    <Parameter name="key"></Parameter>
+        <Parameter name="adUserClient" type="replace" optional="true" after="ca_freebulkpositions_v.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="ca_freebulkpositions_v.AD_Org_ID IN (" text="'1'"/>
+
+    <Field name="adUserClient" value="void"></Field>
+    <Field name="adOrgClient" value="void"></Field>
+    <Field name="createdby" value="void"></Field>
+    
+    <Field name="trBgcolor" value="void"></Field>
+    <Field name="totalCount" value="void"></Field>
+    <Field name="dateTimeFormat" value=""></Field>
+  </SqlMethod>
+  
+  
+
+  <SqlMethod name="set" type="constant" return="multiple">
+      <SqlMethodComment>Create a registry</SqlMethodComment>
+      <Sql></Sql>
+
+<Parameter name="cUomId"></Parameter><Parameter name="createdby"></Parameter><Parameter name="createdbyr"></Parameter><Parameter name="freeqty"></Parameter><Parameter name="mProductId"></Parameter><Parameter name="mProductIdr"></Parameter><Parameter name="mWarehouseId"></Parameter><Parameter name="adOrgId"></Parameter><Parameter name="adClientId"></Parameter><Parameter name="isactive"></Parameter><Parameter name="caFreebulkpositionsVId"></Parameter><Parameter name="updatedby"></Parameter><Parameter name="updatedbyr"></Parameter>
+   </SqlMethod>
+
+
+
+
+
+
+   <SqlMethod name="selectDefD2F444B07E28446FA0A3332AB4C3EF85_0" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as Createdby FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="CreatedbyR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDefA6D95F8AB07442ACA1A0EA94BD51F503_1" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Value), '')  || ' - ' || COALESCE(TO_CHAR(table1.Name), '') ) as M_Product_ID FROM M_Product table1 WHERE table1.isActive='Y' AND table1.M_Product_ID = ?  
+    ]]></Sql>
+<Parameter name="M_Product_IDR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDef839D85BF1EEB4F01AB165412FD3AF023_2" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as Updatedby FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="UpdatedbyR"/>
+  </SqlMethod>
+
+
+
+
+
+
+
+
+
+
+  <SqlMethod name="update" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        UPDATE ca_freebulkpositions_v
+        SET AD_Org_ID = (?) , M_Product_ID = (?) , Freeqty = TO_NUMBER(?) , M_Warehouse_ID = (?) , Isactive = (?) , C_Uom_ID = (?) , AD_Client_ID = (?) , CA_Freebulkpositions_V_ID = (?) , updated = now(), updatedby = ? 
+        WHERE ca_freebulkpositions_v.CA_Freebulkpositions_V_ID = ? 
+        
+        AND ca_freebulkpositions_v.AD_Client_ID IN ('1') 
+        AND ca_freebulkpositions_v.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="adOrgId"></Parameter> <Parameter name="mProductId"></Parameter> <Parameter name="freeqty"></Parameter> <Parameter name="mWarehouseId"></Parameter> <Parameter name="isactive"></Parameter> <Parameter name="cUomId"></Parameter> <Parameter name="adClientId"></Parameter> <Parameter name="caFreebulkpositionsVId"></Parameter> 
+    <Parameter name="updatedby"></Parameter>
+    <Parameter id="paramKey" name="caFreebulkpositionsVId"></Parameter>
+    
+    
+        <Parameter name="adUserClient" type="replace" optional="true" after="ca_freebulkpositions_v.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="ca_freebulkpositions_v.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="insert" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        INSERT INTO ca_freebulkpositions_v 
+        (AD_Org_ID, M_Product_ID, Freeqty, M_Warehouse_ID, Isactive, C_Uom_ID, AD_Client_ID, CA_Freebulkpositions_V_ID, created, createdby, updated, updatedBy)
+        VALUES ((?), (?), TO_NUMBER(?), (?), (?), (?), (?), (?), now(), ?, now(), ?)
+    ]]></Sql>
+    <Parameter name="adOrgId"></Parameter> <Parameter name="mProductId"></Parameter> <Parameter name="freeqty"></Parameter> <Parameter name="mWarehouseId"></Parameter> <Parameter name="isactive"></Parameter> <Parameter name="cUomId"></Parameter> <Parameter name="adClientId"></Parameter> <Parameter name="caFreebulkpositionsVId"></Parameter> 
+    <Parameter name="createdby"></Parameter>
+    <Parameter name="updatedby"></Parameter>
+  </SqlMethod>
+
+  <SqlMethod name="delete" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM ca_freebulkpositions_v
+        WHERE ca_freebulkpositions_v.CA_Freebulkpositions_V_ID = ? 
+        
+        AND ca_freebulkpositions_v.AD_Client_ID IN ('1') 
+        AND ca_freebulkpositions_v.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+    
+        <Parameter name="adUserClient" type="replace" optional="true" after="ca_freebulkpositions_v.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="ca_freebulkpositions_v.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="deleteTransactional" connection="true" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM ca_freebulkpositions_v
+        WHERE ca_freebulkpositions_v.CA_Freebulkpositions_V_ID = ? 
+        
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+    
+  </SqlMethod>
+  
+  <SqlMethod name="selectOrg" type="preparedStatement" return="string">
+    <SqlMethodComment>Select for relation</SqlMethodComment>
+    <Sql><![CDATA[ 
+        SELECT AD_ORG_ID
+          FROM ca_freebulkpositions_v
+         WHERE ca_freebulkpositions_v.CA_Freebulkpositions_V_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+  
+  <SqlMethod name="getCurrentDBTimestamp" type="preparedStatement" return="string">
+    <Sql><![CDATA[ 
+        SELECT to_char(Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp
+          FROM ca_freebulkpositions_v
+         WHERE ca_freebulkpositions_v.CA_Freebulkpositions_V_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+</SqlClass>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlClass id="class" name="ExportProductData" package="org.openbravo.erpWindows.ExportProduct">
+  <SqlClassComment>WAD Generated class</SqlClassComment>
+
+  <SqlMethod name="selectEdit" type="preparedStatement" return="multiple">
+    <SqlMethodComment>Select for edit</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT to_char(i_product_v.Created, ?) as created, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = i_product_v.CreatedBy) as CreatedByR, 
+        to_char(i_product_v.Updated, ?) as updated, 
+        to_char(i_product_v.Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp,  
+        i_product_v.UpdatedBy, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = i_product_v.UpdatedBy) as UpdatedByR,
+        i_product_v.AD_Org_ID, 
+(CASE WHEN i_product_v.AD_Org_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table1.Name), ''))),'') ) END) AS AD_Org_IDR, 
+i_product_v.Imageurl, 
+i_product_v.Value, 
+i_product_v.Upc, 
+i_product_v.Name, 
+i_product_v.Descriptionurl, 
+i_product_v.Description, 
+i_product_v.Documentnote, 
+i_product_v.M_Product_Category_ID, 
+(CASE WHEN i_product_v.M_Product_Category_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table2.Name), ''))),'') ) END) AS M_Product_Category_IDR, 
+i_product_v.Typeofproduct, 
+i_product_v.C_Uom_ID, 
+(CASE WHEN i_product_v.C_Uom_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR((CASE WHEN tableTRL3.Name IS NULL THEN TO_CHAR(table3.Name) ELSE TO_CHAR(tableTRL3.Name) END)), ''))),'') ) END) AS C_Uom_IDR, 
+i_product_v.Producttype, 
+COALESCE(i_product_v.Isstocked, 'N') AS Isstocked, 
+i_product_v.M_Locator_ID, 
+(CASE WHEN i_product_v.M_Locator_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table4.Value), ''))),'') ) END) AS M_Locator_IDR, 
+COALESCE(i_product_v.Isserialtracking, 'N') AS Isserialtracking, 
+COALESCE(i_product_v.Isbatchtracking, 'N') AS Isbatchtracking, 
+i_product_v.Weight, 
+i_product_v.Volume, 
+i_product_v.Shelfwidth, 
+i_product_v.Shelfheight, 
+i_product_v.Shelfdepth, 
+i_product_v.Unitsperpallet, 
+COALESCE(i_product_v.Isconsumable, 'N') AS Isconsumable, 
+COALESCE(i_product_v.Issparepart, 'N') AS Issparepart, 
+COALESCE(i_product_v.Issetitem, 'N') AS Issetitem, 
+COALESCE(i_product_v.Isfreightproduct, 'N') AS Isfreightproduct, 
+COALESCE(i_product_v.Production, 'N') AS Production, 
+COALESCE(i_product_v.Isbom, 'N') AS Isbom, 
+COALESCE(i_product_v.Ispurchased, 'N') AS Ispurchased, 
+i_product_v.Manufacturer, 
+i_product_v.Manufacturernumber, 
+i_product_v.Cusomstarifno, 
+i_product_v.C_Country_ID, 
+(CASE WHEN i_product_v.C_Country_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR((CASE WHEN tableTRL5.Name IS NULL THEN TO_CHAR(table5.Name) ELSE TO_CHAR(tableTRL5.Name) END)), ''))),'') ) END) AS C_Country_IDR, 
+COALESCE(i_product_v.Calculated, 'N') AS Calculated, 
+COALESCE(i_product_v.Issold, 'N') AS Issold, 
+i_product_v.C_Tax_ID, 
+(CASE WHEN i_product_v.C_Tax_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR((CASE WHEN tableTRL6.Name IS NULL THEN TO_CHAR(table6.Name) ELSE TO_CHAR(tableTRL6.Name) END)), ''))),'') ) END) AS C_Tax_IDR, 
+i_product_v.Basepriceunit, 
+i_product_v.Basepricemultiplicator, 
+COALESCE(i_product_v.Discontinued, 'N') AS Discontinued, 
+i_product_v.Discontinuedby, 
+COALESCE(i_product_v.Isactive, 'N') AS Isactive, 
+COALESCE(i_product_v.Isserviceitem, 'N') AS Isserviceitem, 
+i_product_v.I_Product_V_ID, 
+i_product_v.M_Attributeset_ID, 
+i_product_v.AD_Client_ID, 
+ 
+        ? AS LANGUAGE 
+        FROM i_product_v left join (select AD_Org_ID, Name from AD_Org) table1 on (i_product_v.AD_Org_ID = table1.AD_Org_ID) left join (select M_Product_Category_ID, Name from M_Product_Category) table2 on (i_product_v.M_Product_Category_ID = table2.M_Product_Category_ID) left join (select C_Uom_ID, Name from C_Uom) table3 on (i_product_v.C_Uom_ID = table3.C_Uom_ID) left join (select C_UOM_ID,AD_Language, Name from C_UOM_TRL) tableTRL3 on (table3.C_UOM_ID = tableTRL3.C_UOM_ID and tableTRL3.AD_Language = ?)  left join (select M_Locator_ID, Value from M_Locator) table4 on (i_product_v.M_Locator_ID = table4.M_Locator_ID) left join (select C_Country_ID, Name from C_Country) table5 on (i_product_v.C_Country_ID = table5.C_Country_ID) left join (select C_Country_ID,AD_Language, Name from C_Country_TRL) tableTRL5 on (table5.C_Country_ID = tableTRL5.C_Country_ID and tableTRL5.AD_Language = ?)  left join (select C_Tax_ID, Name from C_Tax) table6 on (i_product_v.C_Tax_ID = table6.C_Tax_ID) left join (select C_Tax_ID,AD_Language, Name from C_Tax_TRL) tableTRL6 on (table6.C_Tax_ID = tableTRL6.C_Tax_ID and tableTRL6.AD_Language = ?) 
+        WHERE 2=2 
+
+        AND 1=1 
+        AND i_product_v.I_Product_V_ID = ? 
+        AND i_product_v.AD_Client_ID IN ('1') 
+           AND i_product_v.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="dateTimeFormat"></Parameter>
+    <Parameter name="dateTimeFormat"></Parameter>
+    
+    <Parameter name="paramLanguage"></Parameter>
+<Parameter name="paramLanguage"/>
+<Parameter name="paramLanguage"/>
+<Parameter name="paramLanguage"/>
+
+
+    <Parameter name="key"></Parameter>
+        <Parameter name="adUserClient" type="replace" optional="true" after="i_product_v.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="i_product_v.AD_Org_ID IN (" text="'1'"/>
+
+    <Field name="adUserClient" value="void"></Field>
+    <Field name="adOrgClient" value="void"></Field>
+    <Field name="createdby" value="void"></Field>
+    
+    <Field name="trBgcolor" value="void"></Field>
+    <Field name="totalCount" value="void"></Field>
+    <Field name="dateTimeFormat" value=""></Field>
+  </SqlMethod>
+  
+  
+
+  <SqlMethod name="set" type="constant" return="multiple">
+      <SqlMethodComment>Create a registry</SqlMethodComment>
+      <Sql></Sql>
+
+<Parameter name="shelfwidth"></Parameter><Parameter name="shelfheight"></Parameter><Parameter name="basepriceunit"></Parameter><Parameter name="imageurl"></Parameter><Parameter name="adClientId"></Parameter><Parameter name="cusomstarifno"></Parameter><Parameter name="basepricemultiplicator"></Parameter><Parameter name="unitsperpallet"></Parameter><Parameter name="production"></Parameter><Parameter name="value"></Parameter><Parameter name="isserviceitem"></Parameter><Parameter name="descriptionurl"></Parameter><Parameter name="issparepart"></Parameter><Parameter name="mAttributesetId"></Parameter><Parameter name="producttype"></Parameter><Parameter name="issold"></Parameter><Parameter name="isserialtracking"></Parameter><Parameter name="name"></Parameter><Parameter name="mProductCategoryId"></Parameter><Parameter name="manufacturer"></Parameter><Parameter name="isstocked"></Parameter><Parameter name="weight"></Parameter><Parameter name="upc"></Parameter><Parameter name="cUomId"></Parameter><Parameter name="updatedby"></Parameter><Parameter name="updatedbyr"></Parameter><Parameter name="iProductVId"></Parameter><Parameter name="manufacturernumber"></Parameter><Parameter name="isconsumable"></Parameter><Parameter name="volume"></Parameter><Parameter name="isbatchtracking"></Parameter><Parameter name="ispurchased"></Parameter><Parameter name="isactive"></Parameter><Parameter name="documentnote"></Parameter><Parameter name="description"></Parameter><Parameter name="isbom"></Parameter><Parameter name="discontinued"></Parameter><Parameter name="calculated"></Parameter><Parameter name="createdby"></Parameter><Parameter name="createdbyr"></Parameter><Parameter name="isfreightproduct"></Parameter><Parameter name="typeofproduct"></Parameter><Parameter name="cCountryId"></Parameter><Parameter name="adOrgId"></Parameter><Parameter name="mLocatorId"></Parameter><Parameter name="mLocatorIdr"></Parameter><Parameter name="discontinuedby"></Parameter><Parameter name="issetitem"></Parameter><Parameter name="shelfdepth"></Parameter><Parameter name="cTaxId"></Parameter>
+   </SqlMethod>
+
+
+
+
+
+
+   <SqlMethod name="selectDefBEB394B329AE4BD5995E2D326917BCDD_0" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as Updatedby FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="UpdatedbyR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDef5820980F26054DD9A4F5A9CB4BCA965B_1" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as Createdby FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="CreatedbyR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDef429B1A2DEEFE4A1E9228C16E951CEDCA_2" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Value), '') ) as M_Locator_ID FROM M_Locator table1 WHERE table1.isActive='Y' AND table1.M_Locator_ID = ?  
+    ]]></Sql>
+<Parameter name="M_Locator_IDR"/>
+  </SqlMethod>
+
+
+
+
+
+
+
+
+
+
+  <SqlMethod name="update" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        UPDATE i_product_v
+        SET AD_Org_ID = (?) , Imageurl = (?) , Value = (?) , Upc = (?) , Name = (?) , Descriptionurl = (?) , Description = (?) , Documentnote = (?) , M_Product_Category_ID = (?) , Typeofproduct = (?) , C_Uom_ID = (?) , Producttype = (?) , Isstocked = (?) , M_Locator_ID = (?) , Isserialtracking = (?) , Isbatchtracking = (?) , Weight = TO_NUMBER(?) , Volume = TO_NUMBER(?) , Shelfwidth = TO_NUMBER(?) , Shelfheight = TO_NUMBER(?) , Shelfdepth = TO_NUMBER(?) , Unitsperpallet = TO_NUMBER(?) , Isconsumable = (?) , Issparepart = (?) , Issetitem = (?) , Isfreightproduct = (?) , Production = (?) , Isbom = (?) , Ispurchased = (?) , Manufacturer = (?) , Manufacturernumber = (?) , Cusomstarifno = (?) , C_Country_ID = (?) , Calculated = (?) , Issold = (?) , C_Tax_ID = (?) , Basepriceunit = (?) , Basepricemultiplicator = TO_NUMBER(?) , Discontinued = (?) , Discontinuedby = TO_DATE(?) , Isactive = (?) , Isserviceitem = (?) , I_Product_V_ID = (?) , M_Attributeset_ID = (?) , AD_Client_ID = (?) , updated = now(), updatedby = ? 
+        WHERE i_product_v.I_Product_V_ID = ? 
+        
+        AND i_product_v.AD_Client_ID IN ('1') 
+        AND i_product_v.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="adOrgId"></Parameter> <Parameter name="imageurl"></Parameter> <Parameter name="value"></Parameter> <Parameter name="upc"></Parameter> <Parameter name="name"></Parameter> <Parameter name="descriptionurl"></Parameter> <Parameter name="description"></Parameter> <Parameter name="documentnote"></Parameter> <Parameter name="mProductCategoryId"></Parameter> <Parameter name="typeofproduct"></Parameter> <Parameter name="cUomId"></Parameter> <Parameter name="producttype"></Parameter> <Parameter name="isstocked"></Parameter> <Parameter name="mLocatorId"></Parameter> <Parameter name="isserialtracking"></Parameter> <Parameter name="isbatchtracking"></Parameter> <Parameter name="weight"></Parameter> <Parameter name="volume"></Parameter> <Parameter name="shelfwidth"></Parameter> <Parameter name="shelfheight"></Parameter> <Parameter name="shelfdepth"></Parameter> <Parameter name="unitsperpallet"></Parameter> <Parameter name="isconsumable"></Parameter> <Parameter name="issparepart"></Parameter> <Parameter name="issetitem"></Parameter> <Parameter name="isfreightproduct"></Parameter> <Parameter name="production"></Parameter> <Parameter name="isbom"></Parameter> <Parameter name="ispurchased"></Parameter> <Parameter name="manufacturer"></Parameter> <Parameter name="manufacturernumber"></Parameter> <Parameter name="cusomstarifno"></Parameter> <Parameter name="cCountryId"></Parameter> <Parameter name="calculated"></Parameter> <Parameter name="issold"></Parameter> <Parameter name="cTaxId"></Parameter> <Parameter name="basepriceunit"></Parameter> <Parameter name="basepricemultiplicator"></Parameter> <Parameter name="discontinued"></Parameter> <Parameter name="discontinuedby"></Parameter> <Parameter name="isactive"></Parameter> <Parameter name="isserviceitem"></Parameter> <Parameter name="iProductVId"></Parameter> <Parameter name="mAttributesetId"></Parameter> <Parameter name="adClientId"></Parameter> 
+    <Parameter name="updatedby"></Parameter>
+    <Parameter id="paramKey" name="iProductVId"></Parameter>
+    
+    
+        <Parameter name="adUserClient" type="replace" optional="true" after="i_product_v.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="i_product_v.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="insert" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        INSERT INTO i_product_v 
+        (AD_Org_ID, Imageurl, Value, Upc, Name, Descriptionurl, Description, Documentnote, M_Product_Category_ID, Typeofproduct, C_Uom_ID, Producttype, Isstocked, M_Locator_ID, Isserialtracking, Isbatchtracking, Weight, Volume, Shelfwidth, Shelfheight, Shelfdepth, Unitsperpallet, Isconsumable, Issparepart, Issetitem, Isfreightproduct, Production, Isbom, Ispurchased, Manufacturer, Manufacturernumber, Cusomstarifno, C_Country_ID, Calculated, Issold, C_Tax_ID, Basepriceunit, Basepricemultiplicator, Discontinued, Discontinuedby, Isactive, Isserviceitem, I_Product_V_ID, M_Attributeset_ID, AD_Client_ID, created, createdby, updated, updatedBy)
+        VALUES ((?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), (?), TO_NUMBER(?), (?), TO_DATE(?), (?), (?), (?), (?), (?), now(), ?, now(), ?)
+    ]]></Sql>
+    <Parameter name="adOrgId"></Parameter> <Parameter name="imageurl"></Parameter> <Parameter name="value"></Parameter> <Parameter name="upc"></Parameter> <Parameter name="name"></Parameter> <Parameter name="descriptionurl"></Parameter> <Parameter name="description"></Parameter> <Parameter name="documentnote"></Parameter> <Parameter name="mProductCategoryId"></Parameter> <Parameter name="typeofproduct"></Parameter> <Parameter name="cUomId"></Parameter> <Parameter name="producttype"></Parameter> <Parameter name="isstocked"></Parameter> <Parameter name="mLocatorId"></Parameter> <Parameter name="isserialtracking"></Parameter> <Parameter name="isbatchtracking"></Parameter> <Parameter name="weight"></Parameter> <Parameter name="volume"></Parameter> <Parameter name="shelfwidth"></Parameter> <Parameter name="shelfheight"></Parameter> <Parameter name="shelfdepth"></Parameter> <Parameter name="unitsperpallet"></Parameter> <Parameter name="isconsumable"></Parameter> <Parameter name="issparepart"></Parameter> <Parameter name="issetitem"></Parameter> <Parameter name="isfreightproduct"></Parameter> <Parameter name="production"></Parameter> <Parameter name="isbom"></Parameter> <Parameter name="ispurchased"></Parameter> <Parameter name="manufacturer"></Parameter> <Parameter name="manufacturernumber"></Parameter> <Parameter name="cusomstarifno"></Parameter> <Parameter name="cCountryId"></Parameter> <Parameter name="calculated"></Parameter> <Parameter name="issold"></Parameter> <Parameter name="cTaxId"></Parameter> <Parameter name="basepriceunit"></Parameter> <Parameter name="basepricemultiplicator"></Parameter> <Parameter name="discontinued"></Parameter> <Parameter name="discontinuedby"></Parameter> <Parameter name="isactive"></Parameter> <Parameter name="isserviceitem"></Parameter> <Parameter name="iProductVId"></Parameter> <Parameter name="mAttributesetId"></Parameter> <Parameter name="adClientId"></Parameter> 
+    <Parameter name="createdby"></Parameter>
+    <Parameter name="updatedby"></Parameter>
+  </SqlMethod>
+
+  <SqlMethod name="delete" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM i_product_v
+        WHERE i_product_v.I_Product_V_ID = ? 
+        
+        AND i_product_v.AD_Client_ID IN ('1') 
+        AND i_product_v.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+    
+        <Parameter name="adUserClient" type="replace" optional="true" after="i_product_v.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="i_product_v.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="deleteTransactional" connection="true" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM i_product_v
+        WHERE i_product_v.I_Product_V_ID = ? 
+        
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+    
+  </SqlMethod>
+  
+  <SqlMethod name="selectOrg" type="preparedStatement" return="string">
+    <SqlMethodComment>Select for relation</SqlMethodComment>
+    <Sql><![CDATA[ 
+        SELECT AD_ORG_ID
+          FROM i_product_v
+         WHERE i_product_v.I_Product_V_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+  
+  <SqlMethod name="getCurrentDBTimestamp" type="preparedStatement" return="string">
+    <Sql><![CDATA[ 
+        SELECT to_char(Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp
+          FROM i_product_v
+         WHERE i_product_v.I_Product_V_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+</SqlClass>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlClass id="class" name="BatchOnhandQuantitiesData" package="org.openbravo.erpWindows.Product">
+  <SqlClassComment>WAD Generated class</SqlClassComment>
+
+  <SqlMethod name="selectEdit" type="preparedStatement" return="multiple">
+    <SqlMethodComment>Select for edit</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT to_char(snr_batchlocator_v.Created, ?) as created, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = snr_batchlocator_v.CreatedBy) as CreatedByR, 
+        to_char(snr_batchlocator_v.Updated, ?) as updated, 
+        to_char(snr_batchlocator_v.Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp,  
+        snr_batchlocator_v.UpdatedBy, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = snr_batchlocator_v.UpdatedBy) as UpdatedByR,
+        snr_batchlocator_v.M_Product_ID, 
+(CASE WHEN snr_batchlocator_v.M_Product_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table1.Value), ''))),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR((CASE WHEN tableTRL1.Name IS NULL THEN TO_CHAR(table1.Name) ELSE TO_CHAR(tableTRL1.Name) END)), ''))),'') ) END) AS M_Product_IDR, 
+snr_batchlocator_v.M_Locator_ID, 
+(CASE WHEN snr_batchlocator_v.M_Locator_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table2.Value), ''))),'') ) END) AS M_Locator_IDR, 
+snr_batchlocator_v.Batchnumber, 
+snr_batchlocator_v.Qtyonhand, 
+snr_batchlocator_v.AD_Client_ID, 
+snr_batchlocator_v.SNR_Batchlocator_ID, 
+snr_batchlocator_v.SNR_Batchlocator_V_ID, 
+snr_batchlocator_v.AD_Org_ID, 
+COALESCE(snr_batchlocator_v.Isactive, 'N') AS Isactive, 
+snr_batchlocator_v.SNR_Batchmasterdata_ID, 
+ 
+        ? AS LANGUAGE 
+        FROM snr_batchlocator_v left join (select M_Product_ID, Value, Name from M_Product) table1 on (snr_batchlocator_v.M_Product_ID = table1.M_Product_ID) left join (select M_Product_ID,AD_Language, Name from M_Product_TRL) tableTRL1 on (table1.M_Product_ID = tableTRL1.M_Product_ID and tableTRL1.AD_Language = ?)  left join (select M_Locator_ID, Value from M_Locator) table2 on (snr_batchlocator_v.M_Locator_ID = table2.M_Locator_ID)
+        WHERE 2=2 
+
+        AND 1=1 
+        AND snr_batchlocator_v.SNR_Batchlocator_V_ID = ? 
+        AND snr_batchlocator_v.AD_Client_ID IN ('1') 
+           AND snr_batchlocator_v.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="dateTimeFormat"></Parameter>
+    <Parameter name="dateTimeFormat"></Parameter>
+    
+    <Parameter name="paramLanguage"></Parameter>
+<Parameter name="paramLanguage"/>
+
+    <Parameter name="snrBatchmasterdataId" optional="true" after="AND 1=1 " id="paramKeyParent"> AND snr_batchlocator_v.SNR_Batchmasterdata_ID = ? </Parameter>
+    <Parameter name="key"></Parameter>
+        <Parameter name="adUserClient" type="replace" optional="true" after="snr_batchlocator_v.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="snr_batchlocator_v.AD_Org_ID IN (" text="'1'"/>
+
+    <Field name="adUserClient" value="void"></Field>
+    <Field name="adOrgClient" value="void"></Field>
+    <Field name="createdby" value="void"></Field>
+    
+    <Field name="trBgcolor" value="void"></Field>
+    <Field name="totalCount" value="void"></Field>
+    <Field name="dateTimeFormat" value=""></Field>
+  </SqlMethod>
+  
+  
+
+  <SqlMethod name="set" type="constant" return="multiple">
+      <SqlMethodComment>Create a registry</SqlMethodComment>
+      <Sql></Sql>
+    <Parameter name="snrBatchmasterdataId" id="paramKeyParent"></Parameter>
+<Parameter name="adOrgId"></Parameter><Parameter name="mLocatorId"></Parameter><Parameter name="mLocatorIdr"></Parameter><Parameter name="snrBatchlocatorVId"></Parameter><Parameter name="createdby"></Parameter><Parameter name="createdbyr"></Parameter><Parameter name="adClientId"></Parameter><Parameter name="qtyonhand"></Parameter><Parameter name="updatedby"></Parameter><Parameter name="updatedbyr"></Parameter><Parameter name="batchnumber"></Parameter><Parameter name="mProductId"></Parameter><Parameter name="mProductIdr"></Parameter><Parameter name="isactive"></Parameter><Parameter name="snrBatchlocatorId"></Parameter>
+   </SqlMethod>
+
+
+
+
+
+
+   <SqlMethod name="selectDef342434563AE84A2B9902C56F6B2B2031_0" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Value), '') ) as M_Locator_ID FROM M_Locator table1 WHERE table1.isActive='Y' AND table1.M_Locator_ID = ?  
+    ]]></Sql>
+<Parameter name="M_Locator_IDR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDefE99DF8A6CD2044D5BFBD86A7E0205710_1" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as Createdby FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="CreatedbyR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDef0C954D575C7C46CF8E942E77310FE57F_2" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as Updatedby FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="UpdatedbyR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDefC0310A44A30C4363A00444FFE81F6A92_3" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Value), '')  || ' - ' || COALESCE(TO_CHAR(table1.Name), '') ) as M_Product_ID FROM M_Product table1 WHERE table1.isActive='Y' AND table1.M_Product_ID = ?  
+    ]]></Sql>
+<Parameter name="M_Product_IDR"/>
+  </SqlMethod>
+
+
+
+  <SqlMethod name="selectParentID" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>return the parent ID</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT snr_batchlocator_v.SNR_Batchmasterdata_ID AS NAME
+        FROM snr_batchlocator_v
+        WHERE snr_batchlocator_v.SNR_Batchlocator_V_ID = ?
+    ]]></Sql>
+    <Parameter name="key"></Parameter>
+  </SqlMethod>
+
+   <SqlMethod name="selectParent" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for parent field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT (TO_CHAR(COALESCE(TO_CHAR(table1.Batchnumber), ''))) AS NAME FROM snr_batchmasterdata left join (select SNR_Batchmasterdata_ID, Batchnumber from SNR_Batchmasterdata) table1 on (snr_batchmasterdata.SNR_Batchmasterdata_ID = table1.SNR_Batchmasterdata_ID) WHERE snr_batchmasterdata.SNR_Batchmasterdata_ID = ?  
+    ]]></Sql>
+<Parameter name="snrBatchmasterdataId"/>
+
+  </SqlMethod>
+
+
+
+   <SqlMethod name="selectParentTrl" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for parent field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT (TO_CHAR(COALESCE(TO_CHAR(table1.Batchnumber), ''))) AS NAME FROM snr_batchmasterdata left join (select SNR_Batchmasterdata_ID, Batchnumber from SNR_Batchmasterdata) table1 on (snr_batchmasterdata.SNR_Batchmasterdata_ID = table1.SNR_Batchmasterdata_ID) WHERE snr_batchmasterdata.SNR_Batchmasterdata_ID = ?  
+    ]]></Sql>
+<Parameter name="snrBatchmasterdataId"/>
+
+  </SqlMethod>
+
+
+
+
+
+
+
+
+  <SqlMethod name="update" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        UPDATE snr_batchlocator_v
+        SET M_Product_ID = (?) , M_Locator_ID = (?) , Batchnumber = (?) , Qtyonhand = TO_NUMBER(?) , AD_Client_ID = (?) , SNR_Batchlocator_ID = (?) , SNR_Batchlocator_V_ID = (?) , AD_Org_ID = (?) , Isactive = (?) , SNR_Batchmasterdata_ID = (?) , updated = now(), updatedby = ? 
+        WHERE snr_batchlocator_v.SNR_Batchlocator_V_ID = ? 
+                 AND snr_batchlocator_v.SNR_Batchmasterdata_ID = ? 
+        AND snr_batchlocator_v.AD_Client_ID IN ('1') 
+        AND snr_batchlocator_v.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="mProductId"></Parameter> <Parameter name="mLocatorId"></Parameter> <Parameter name="batchnumber"></Parameter> <Parameter name="qtyonhand"></Parameter> <Parameter name="adClientId"></Parameter> <Parameter name="snrBatchlocatorId"></Parameter> <Parameter name="snrBatchlocatorVId"></Parameter> <Parameter name="adOrgId"></Parameter> <Parameter name="isactive"></Parameter> <Parameter name="snrBatchmasterdataId"></Parameter> 
+    <Parameter name="updatedby"></Parameter>
+    <Parameter id="paramKey" name="snrBatchlocatorVId"></Parameter>
+    
+    <Parameter name="snrBatchmasterdataId" id="paramKeyParent"></Parameter>
+        <Parameter name="adUserClient" type="replace" optional="true" after="snr_batchlocator_v.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="snr_batchlocator_v.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="insert" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        INSERT INTO snr_batchlocator_v 
+        (M_Product_ID, M_Locator_ID, Batchnumber, Qtyonhand, AD_Client_ID, SNR_Batchlocator_ID, SNR_Batchlocator_V_ID, AD_Org_ID, Isactive, SNR_Batchmasterdata_ID, created, createdby, updated, updatedBy)
+        VALUES ((?), (?), (?), TO_NUMBER(?), (?), (?), (?), (?), (?), (?), now(), ?, now(), ?)
+    ]]></Sql>
+    <Parameter name="mProductId"></Parameter> <Parameter name="mLocatorId"></Parameter> <Parameter name="batchnumber"></Parameter> <Parameter name="qtyonhand"></Parameter> <Parameter name="adClientId"></Parameter> <Parameter name="snrBatchlocatorId"></Parameter> <Parameter name="snrBatchlocatorVId"></Parameter> <Parameter name="adOrgId"></Parameter> <Parameter name="isactive"></Parameter> <Parameter name="snrBatchmasterdataId"></Parameter> 
+    <Parameter name="createdby"></Parameter>
+    <Parameter name="updatedby"></Parameter>
+  </SqlMethod>
+
+  <SqlMethod name="delete" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM snr_batchlocator_v
+        WHERE snr_batchlocator_v.SNR_Batchlocator_V_ID = ? 
+                 AND snr_batchlocator_v.SNR_Batchmasterdata_ID = ? 
+        AND snr_batchlocator_v.AD_Client_ID IN ('1') 
+        AND snr_batchlocator_v.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+        <Parameter name="snrBatchmasterdataId" id="paramKeyParent"></Parameter>
+        <Parameter name="adUserClient" type="replace" optional="true" after="snr_batchlocator_v.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="snr_batchlocator_v.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="deleteTransactional" connection="true" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM snr_batchlocator_v
+        WHERE snr_batchlocator_v.SNR_Batchlocator_V_ID = ? 
+                 AND snr_batchlocator_v.SNR_Batchmasterdata_ID = ? 
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+        <Parameter name="snrBatchmasterdataId" id="paramKeyParent"></Parameter>
+  </SqlMethod>
+  
+  <SqlMethod name="selectOrg" type="preparedStatement" return="string">
+    <SqlMethodComment>Select for relation</SqlMethodComment>
+    <Sql><![CDATA[ 
+        SELECT AD_ORG_ID
+          FROM snr_batchlocator_v
+         WHERE snr_batchlocator_v.SNR_Batchlocator_V_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+  
+  <SqlMethod name="getCurrentDBTimestamp" type="preparedStatement" return="string">
+    <Sql><![CDATA[ 
+        SELECT to_char(Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp
+          FROM snr_batchlocator_v
+         WHERE snr_batchlocator_v.SNR_Batchlocator_V_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+</SqlClass>

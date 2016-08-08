@@ -1,0 +1,108 @@
+ 
+<link rel="shortcut icon" href="../web/images/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../web/skins/@THEME@/Openbravo_ERP_250.css" id="paramCSS">
+<link rel="stylesheet" type="text/css" href="../web/skins/@THEME@/Openz.css" id="paramCSS">
+
+<script language="JavaScript" type="text/javascript" id="paramDirectory">var baseDirectory = "../web/";</script>
+<script language="JavaScript" type="text/javascript" id="paramLanguage">  defaultLang = "@LANGUAGE@";</script>
+
+<script language="JavaScript" src="../web/js/openz.js" type="text/javascript"></script>
+<script language="JavaScript" src="../web/js/ajax.js" type="text/javascript"></script>
+<script language="JavaScript" src="../web/js/shortcuts.js" type="text/javascript"></script>
+<script language="JavaScript" src="../web/js/utils.js" type="text/javascript"></script>
+<script language="JavaScript" src="../web/js/messages.js" type="text/javascript"></script>
+<SCRIPT language="JavaScript" src="../web/js/default/MessageBox.js" type="text/javascript"></SCRIPT>
+<SCRIPT language="JavaScript" src="../web/js/default/DateTextBox.js" type="text/javascript"></SCRIPT>
+<SCRIPT language="JavaScript" src="../web/js/default/TimeTextBox.js" type="text/javascript"></SCRIPT>
+<script language="JavaScript" src="../web/js/windowKeyboard.js" type="text/javascript"></script>
+<script language="JavaScript" src="../web/js/appStatus.js" type="text/javascript"></script>
+<script language="JavaScript" src="../web/js/searchs.js" type="text/javascript"></script>
+<SCRIPT language="JavaScript" src="../web/js/calculator.js" type="text/javascript"></SCRIPT>
+<SCRIPT language="JavaScript" src="../web/js/jscalendar/calendar.js" type="text/javascript"></SCRIPT>
+<SCRIPT language="JavaScript" src="../web/js/default/ValidationTextBox.js" type="text/javascript"></SCRIPT>
+<SCRIPT language="JavaScript" src="../web/js/default/ValidationTextArea.js" type="text/javascript"></SCRIPT>
+
+<script language="JavaScript" src="../web/js/djConfig.js" type="text/javascript"></script>
+<script language="JavaScript" src="../web/js/dojotoolkit/dojo/dojo.js" type="text/javascript"></script>
+<script language="JavaScript" src="../web/js/djDependencies.js" type="text/javascript"></script>
+<SCRIPT language="JavaScript" src="../web/js/jscalendar/lang/calendar-@LANGUAGE@.js" type="text/javascript"></SCRIPT>
+<script type="text/javascript" src="../web/js/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript">
+tinyMCE.init({
+        mode : "textareas",
+        theme : "simple",
+        editor_selector : "EditorSimple",
+        width : "900"
+        
+});
+
+function HandleMCEEvent(e) {
+        if (e.type=="keyup"){
+           setWindowEditing(true);logChanges(this);return true;         
+        }
+        if (e.type=="onpaste"){
+           setWindowEditing(true);logChanges(this);return true;         
+        }
+                if (e.type=="onmouseout"){
+           setWindowEditing(true);logChanges(this);return true;         
+        }
+                        if (e.type=="onchange"){
+           setWindowEditing(true);logChanges(this);return true;         
+        }
+        return true; // Continue handling
+}
+
+tinyMCE.init({
+        
+        editor_selector : "EditorAdvanced",
+        width : "900",
+
+        mode : "textareas",
+        theme : "advanced",
+        plugins : "emotions,spellchecker,advhr,insertdatetime,preview,heading,fullscreen", 
+        extended_valid_elements : "iframe[src|frameborder|style|scrolling|class|width|height|name|align]",
+        heading_clear_tag : "", 
+        forced_root_block : "",
+        cleanup_on_startup: false,
+        trim_span_elements: false,
+        verify_html: false,
+        cleanup: false,
+        convert_urls: false,
+        force_p_newlines : false,
+        force_br_newlines : false,
+        // Theme options - button# indicated the row# only
+        theme_advanced_buttons1 : "h1,h2,h3,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,fontselect,fontsizeselect",
+        theme_advanced_buttons2 : "cut,copy,paste,|,bullist,numlist,|,outdent,indent,|,undo,redo,|,link,unlink,anchor,image,|,code,preview,|,forecolor,backcolor",
+        theme_advanced_buttons3 : "insertdate,inserttime,|,spellchecker,advhr,,removeformat,|,sub,sup,|,charmap,emotions,|,fullscreen",      
+        theme_advanced_toolbar_location : "top",
+        theme_advanced_toolbar_align : "left",
+        theme_advanced_statusbar_location : "bottom",
+        theme_advanced_resizing : true,
+        handle_event_callback :  "HandleMCEEvent",
+        entity_encoding : "raw",        
+        onchange_callback:  "HandleMCEEvent",
+setup : function(ed) {
+        
+        var iframePattern = /(<iframe\s.+?>)(|.+?)(<\/iframe>)/gi;
+        var iframeReplacePattern = '$1&lt;\/iframe&gt;$3';
+    ed.onChange.add(function(ed, l) { 
+                  console.debug('Editor contents was modified. Contents: ' + l.content);
+          });
+        // Needed for html source view.
+        ed.onGetContent.add( function( ed, o ) {
+            o.content = o.content.replace(iframePattern, iframeReplacePattern);
+        });
+
+        ed.onSaveContent.add( function( ed, o ) {
+            o.content = o.content.replace(iframePattern, iframeReplacePattern);
+        });
+      }
+        
+
+        
+        
+        
+        
+});
+</script>
+

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlClass id="class" name="CommissionLines5955A8396FF74D51A602033C9EB64E9AData" package="org.openbravo.erpWindows.org.openz.modules.multilevelmarketing.EmployeeMLM">
+  <SqlClassComment>WAD Generated class</SqlClassComment>
+
+  <SqlMethod name="selectEdit" type="preparedStatement" return="multiple">
+    <SqlMethodComment>Select for edit</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT to_char(C_CommissionLine.Created, ?) as created, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = C_CommissionLine.CreatedBy) as CreatedByR, 
+        to_char(C_CommissionLine.Updated, ?) as updated, 
+        to_char(C_CommissionLine.Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp,  
+        C_CommissionLine.UpdatedBy, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = C_CommissionLine.UpdatedBy) as UpdatedByR,
+        C_CommissionLine.C_Commission_ID, 
+(CASE WHEN C_CommissionLine.C_Commission_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table1.Name), ''))),'') ) END) AS C_Commission_IDR, 
+C_CommissionLine.Line, 
+COALESCE(C_CommissionLine.IsActive, 'N') AS IsActive, 
+C_CommissionLine.M_Product_Category_ID, 
+(CASE WHEN C_CommissionLine.M_Product_Category_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table2.Name), ''))),'') ) END) AS M_Product_Category_IDR, 
+C_CommissionLine.AmtMultiplier, 
+C_CommissionLine.Salesvolumefrom, 
+C_CommissionLine.Convertedturnover, 
+C_CommissionLine.C_CommissionLine_ID, 
+C_CommissionLine.AD_Client_ID, 
+COALESCE(C_CommissionLine.Isshareofturnover, 'N') AS Isshareofturnover, 
+COALESCE(C_CommissionLine.CommissionOrders, 'N') AS CommissionOrders, 
+C_CommissionLine.AmtSubtract, 
+C_CommissionLine.QtyMultiplier, 
+C_CommissionLine.QtySubtract, 
+COALESCE(C_CommissionLine.IsPositiveOnly, 'N') AS IsPositiveOnly, 
+C_CommissionLine.AD_Org_ID, 
+C_CommissionLine.Description, 
+ 
+        ? AS LANGUAGE 
+        FROM C_CommissionLine left join (select C_Commission_ID, Name from C_Commission) table1 on (C_CommissionLine.C_Commission_ID = table1.C_Commission_ID) left join (select M_Product_Category_ID, Name from M_Product_Category) table2 on (C_CommissionLine.M_Product_Category_ID = table2.M_Product_Category_ID)
+        WHERE 2=2 
+ AND c_commissionline.isshareofturnover='N'
+        AND 1=1 
+        AND C_CommissionLine.C_CommissionLine_ID = ? 
+        AND C_CommissionLine.AD_Client_ID IN ('1') 
+           AND C_CommissionLine.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="dateTimeFormat"></Parameter>
+    <Parameter name="dateTimeFormat"></Parameter>
+    
+    <Parameter name="paramLanguage"></Parameter>
+
+    <Parameter name="cCommissionId" optional="true" after="AND 1=1 " id="paramKeyParent"> AND C_CommissionLine.C_Commission_ID = ? </Parameter>
+    <Parameter name="key"></Parameter>
+        <Parameter name="adUserClient" type="replace" optional="true" after="C_CommissionLine.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="C_CommissionLine.AD_Org_ID IN (" text="'1'"/>
+
+    <Field name="adUserClient" value="void"></Field>
+    <Field name="adOrgClient" value="void"></Field>
+    <Field name="createdby" value="void"></Field>
+    
+    <Field name="trBgcolor" value="void"></Field>
+    <Field name="totalCount" value="void"></Field>
+    <Field name="dateTimeFormat" value=""></Field>
+  </SqlMethod>
+  
+  
+
+  <SqlMethod name="set" type="constant" return="multiple">
+      <SqlMethodComment>Create a registry</SqlMethodComment>
+      <Sql></Sql>
+    <Parameter name="cCommissionId" id="paramKeyParent"></Parameter>
+<Parameter name="ispositiveonly"></Parameter><Parameter name="qtymultiplier"></Parameter><Parameter name="salesvolumefrom"></Parameter><Parameter name="createdby"></Parameter><Parameter name="createdbyr"></Parameter><Parameter name="amtsubtract"></Parameter><Parameter name="adOrgId"></Parameter><Parameter name="updatedby"></Parameter><Parameter name="updatedbyr"></Parameter><Parameter name="isshareofturnover"></Parameter><Parameter name="isactive"></Parameter><Parameter name="line"></Parameter><Parameter name="cCommissionlineId"></Parameter><Parameter name="convertedturnover"></Parameter><Parameter name="amtmultiplier"></Parameter><Parameter name="description"></Parameter><Parameter name="adClientId"></Parameter><Parameter name="mProductCategoryId"></Parameter><Parameter name="qtysubtract"></Parameter><Parameter name="commissionorders"></Parameter>
+   </SqlMethod>
+
+
+
+
+
+
+   <SqlMethod name="selectDef5705_0" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as CreatedBy FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="CreatedByR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDef5707_1" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as UpdatedBy FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="UpdatedByR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDef5709" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT COALESCE(MAX(Line),0)+10 AS DefaultValue FROM C_CommissionLine WHERE C_Commission_ID=? 
+    ]]></Sql>
+
+<Parameter name="C_Commission_ID"/>
+  </SqlMethod>
+
+
+
+  <SqlMethod name="selectParentID" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>return the parent ID</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT C_CommissionLine.C_Commission_ID AS NAME
+        FROM C_CommissionLine
+        WHERE C_CommissionLine.C_CommissionLine_ID = ?
+    ]]></Sql>
+    <Parameter name="key"></Parameter>
+  </SqlMethod>
+
+   <SqlMethod name="selectParent" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for parent field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT (TO_CHAR(COALESCE(TO_CHAR(table1.Name), ''))) AS NAME FROM C_Commission left join (select C_Commission_ID, Name from C_Commission) table1 on (C_Commission.C_Commission_ID = table1.C_Commission_ID) WHERE C_Commission.C_Commission_ID = ?  
+    ]]></Sql>
+<Parameter name="cCommissionId"/>
+
+  </SqlMethod>
+
+
+
+   <SqlMethod name="selectParentTrl" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for parent field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT (TO_CHAR(COALESCE(TO_CHAR(table1.Name), ''))) AS NAME FROM C_Commission left join (select C_Commission_ID, Name from C_Commission) table1 on (C_Commission.C_Commission_ID = table1.C_Commission_ID) WHERE C_Commission.C_Commission_ID = ?  
+    ]]></Sql>
+<Parameter name="cCommissionId"/>
+
+  </SqlMethod>
+
+
+
+
+
+
+
+
+  <SqlMethod name="update" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        UPDATE C_CommissionLine
+        SET C_Commission_ID = (?) , Line = TO_NUMBER(?) , IsActive = (?) , M_Product_Category_ID = (?) , AmtMultiplier = TO_NUMBER(?) , Salesvolumefrom = TO_NUMBER(?) , Convertedturnover = TO_NUMBER(?) , C_CommissionLine_ID = (?) , AD_Client_ID = (?) , Isshareofturnover = (?) , CommissionOrders = (?) , AmtSubtract = TO_NUMBER(?) , QtyMultiplier = TO_NUMBER(?) , QtySubtract = TO_NUMBER(?) , IsPositiveOnly = (?) , AD_Org_ID = (?) , Description = (?) , updated = now(), updatedby = ? 
+        WHERE C_CommissionLine.C_CommissionLine_ID = ? 
+                 AND C_CommissionLine.C_Commission_ID = ? 
+        AND C_CommissionLine.AD_Client_ID IN ('1') 
+        AND C_CommissionLine.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="cCommissionId"></Parameter> <Parameter name="line"></Parameter> <Parameter name="isactive"></Parameter> <Parameter name="mProductCategoryId"></Parameter> <Parameter name="amtmultiplier"></Parameter> <Parameter name="salesvolumefrom"></Parameter> <Parameter name="convertedturnover"></Parameter> <Parameter name="cCommissionlineId"></Parameter> <Parameter name="adClientId"></Parameter> <Parameter name="isshareofturnover"></Parameter> <Parameter name="commissionorders"></Parameter> <Parameter name="amtsubtract"></Parameter> <Parameter name="qtymultiplier"></Parameter> <Parameter name="qtysubtract"></Parameter> <Parameter name="ispositiveonly"></Parameter> <Parameter name="adOrgId"></Parameter> <Parameter name="description"></Parameter> 
+    <Parameter name="updatedby"></Parameter>
+    <Parameter id="paramKey" name="cCommissionlineId"></Parameter>
+    
+    <Parameter name="cCommissionId" id="paramKeyParent"></Parameter>
+        <Parameter name="adUserClient" type="replace" optional="true" after="C_CommissionLine.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="C_CommissionLine.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="insert" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        INSERT INTO C_CommissionLine 
+        (C_Commission_ID, Line, IsActive, M_Product_Category_ID, AmtMultiplier, Salesvolumefrom, Convertedturnover, C_CommissionLine_ID, AD_Client_ID, Isshareofturnover, CommissionOrders, AmtSubtract, QtyMultiplier, QtySubtract, IsPositiveOnly, AD_Org_ID, Description, created, createdby, updated, updatedBy)
+        VALUES ((?), TO_NUMBER(?), (?), (?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), (?), (?), (?), (?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), (?), (?), (?), now(), ?, now(), ?)
+    ]]></Sql>
+    <Parameter name="cCommissionId"></Parameter> <Parameter name="line"></Parameter> <Parameter name="isactive"></Parameter> <Parameter name="mProductCategoryId"></Parameter> <Parameter name="amtmultiplier"></Parameter> <Parameter name="salesvolumefrom"></Parameter> <Parameter name="convertedturnover"></Parameter> <Parameter name="cCommissionlineId"></Parameter> <Parameter name="adClientId"></Parameter> <Parameter name="isshareofturnover"></Parameter> <Parameter name="commissionorders"></Parameter> <Parameter name="amtsubtract"></Parameter> <Parameter name="qtymultiplier"></Parameter> <Parameter name="qtysubtract"></Parameter> <Parameter name="ispositiveonly"></Parameter> <Parameter name="adOrgId"></Parameter> <Parameter name="description"></Parameter> 
+    <Parameter name="createdby"></Parameter>
+    <Parameter name="updatedby"></Parameter>
+  </SqlMethod>
+
+  <SqlMethod name="delete" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM C_CommissionLine
+        WHERE C_CommissionLine.C_CommissionLine_ID = ? 
+                 AND C_CommissionLine.C_Commission_ID = ? 
+        AND C_CommissionLine.AD_Client_ID IN ('1') 
+        AND C_CommissionLine.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+        <Parameter name="cCommissionId" id="paramKeyParent"></Parameter>
+        <Parameter name="adUserClient" type="replace" optional="true" after="C_CommissionLine.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="C_CommissionLine.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="deleteTransactional" connection="true" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM C_CommissionLine
+        WHERE C_CommissionLine.C_CommissionLine_ID = ? 
+                 AND C_CommissionLine.C_Commission_ID = ? 
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+        <Parameter name="cCommissionId" id="paramKeyParent"></Parameter>
+  </SqlMethod>
+  
+  <SqlMethod name="selectOrg" type="preparedStatement" return="string">
+    <SqlMethodComment>Select for relation</SqlMethodComment>
+    <Sql><![CDATA[ 
+        SELECT AD_ORG_ID
+          FROM C_CommissionLine
+         WHERE C_CommissionLine.C_CommissionLine_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+  
+  <SqlMethod name="getCurrentDBTimestamp" type="preparedStatement" return="string">
+    <Sql><![CDATA[ 
+        SELECT to_char(Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp
+          FROM C_CommissionLine
+         WHERE C_CommissionLine.C_CommissionLine_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+</SqlClass>

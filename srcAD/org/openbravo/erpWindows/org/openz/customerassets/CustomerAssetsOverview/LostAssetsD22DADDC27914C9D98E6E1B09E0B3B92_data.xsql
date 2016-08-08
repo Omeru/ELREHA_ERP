@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlClass id="class" name="LostAssetsD22DADDC27914C9D98E6E1B09E0B3B92Data" package="org.openbravo.erpWindows.org.openz.customerassets.CustomerAssetsOverview">
+  <SqlClassComment>WAD Generated class</SqlClassComment>
+
+  <SqlMethod name="selectEdit" type="preparedStatement" return="multiple">
+    <SqlMethodComment>Select for edit</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT to_char(ca_lostassets_v.Created, ?) as created, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = ca_lostassets_v.CreatedBy) as CreatedByR, 
+        to_char(ca_lostassets_v.Updated, ?) as updated, 
+        to_char(ca_lostassets_v.Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp,  
+        ca_lostassets_v.UpdatedBy, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = ca_lostassets_v.UpdatedBy) as UpdatedByR,
+        ca_lostassets_v.SNR_Masterdata_ID, 
+(CASE WHEN ca_lostassets_v.SNR_Masterdata_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table2.Value), ''))),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR((CASE WHEN tableTRL2.Name IS NULL THEN TO_CHAR(table2.Name) ELSE TO_CHAR(tableTRL2.Name) END)), ''))),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table1.Serialnumber), ''))),'') ) END) AS SNR_Masterdata_IDR, 
+ca_lostassets_v.CA_Assetsstocked_ID, 
+(CASE WHEN ca_lostassets_v.CA_Assetsstocked_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table4.Name), ''))),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table5.Value), ''))),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR((CASE WHEN tableTRL5.Name IS NULL THEN TO_CHAR(table5.Name) ELSE TO_CHAR(tableTRL5.Name) END)), ''))),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table3.Qty), ''))),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table7.Value), ''))),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR((CASE WHEN tableTRL7.Name IS NULL THEN TO_CHAR(table7.Name) ELSE TO_CHAR(tableTRL7.Name) END)), ''))),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table6.Serialnumber), ''))),'') ) END) AS CA_Assetsstocked_IDR, 
+ca_lostassets_v.Serialnumber, 
+ca_lostassets_v.M_Product_ID, 
+(CASE WHEN ca_lostassets_v.M_Product_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table8.Value), ''))),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR((CASE WHEN tableTRL8.Name IS NULL THEN TO_CHAR(table8.Name) ELSE TO_CHAR(tableTRL8.Name) END)), ''))),'') ) END) AS M_Product_IDR, 
+ca_lostassets_v.AD_Org_ID, 
+(CASE WHEN ca_lostassets_v.AD_Org_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table9.Name), ''))),'') ) END) AS AD_Org_IDR, 
+ca_lostassets_v.CA_Lostassets_V_ID, 
+ca_lostassets_v.AD_Client_ID, 
+COALESCE(ca_lostassets_v.Isactive, 'N') AS Isactive, 
+ 
+        ? AS LANGUAGE 
+        FROM ca_lostassets_v left join (select SNR_Masterdata_ID, M_Product_ID, Serialnumber from SNR_Masterdata) table1 on (ca_lostassets_v.SNR_Masterdata_ID = table1.SNR_Masterdata_ID) left join (select M_Product_ID, Value, Name from M_Product) table2 on (table1.M_Product_ID = table2.M_Product_ID) left join (select M_Product_ID,AD_Language, Name from M_Product_TRL) tableTRL2 on (table2.M_Product_ID = tableTRL2.M_Product_ID and tableTRL2.AD_Language = ?)  left join (select CA_Assetsstocked_ID, C_BPartner_ID, M_Product_ID, Qty, SNR_Masterdata_id from CA_Assetsstocked) table3 on (ca_lostassets_v.CA_Assetsstocked_ID = table3.CA_Assetsstocked_ID) left join (select C_BPartner_ID, Name from C_BPartner) table4 on (table3.C_BPartner_ID = table4.C_BPartner_ID) left join (select M_Product_ID, Value, Name from M_Product) table5 on (table3.M_Product_ID = table5.M_Product_ID) left join (select M_Product_ID,AD_Language, Name from M_Product_TRL) tableTRL5 on (table5.M_Product_ID = tableTRL5.M_Product_ID and tableTRL5.AD_Language = ?)  left join (select SNR_Masterdata_id, M_Product_ID, Serialnumber from SNR_Masterdata) table6 on (table3.SNR_Masterdata_id = table6.SNR_Masterdata_id) left join (select M_Product_ID, Value, Name from M_Product) table7 on (table6.M_Product_ID = table7.M_Product_ID) left join (select M_Product_ID,AD_Language, Name from M_Product_TRL) tableTRL7 on (table7.M_Product_ID = tableTRL7.M_Product_ID and tableTRL7.AD_Language = ?)  left join (select M_Product_ID, Value, Name from M_Product) table8 on (ca_lostassets_v.M_Product_ID = table8.M_Product_ID) left join (select M_Product_ID,AD_Language, Name from M_Product_TRL) tableTRL8 on (table8.M_Product_ID = tableTRL8.M_Product_ID and tableTRL8.AD_Language = ?)  left join (select AD_Org_ID, Name from AD_Org) table9 on (ca_lostassets_v.AD_Org_ID = table9.AD_Org_ID)
+        WHERE 2=2 
+
+        AND 1=1 
+        AND ca_lostassets_v.CA_Lostassets_V_ID = ? 
+        AND ca_lostassets_v.AD_Client_ID IN ('1') 
+           AND ca_lostassets_v.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="dateTimeFormat"></Parameter>
+    <Parameter name="dateTimeFormat"></Parameter>
+    
+    <Parameter name="paramLanguage"></Parameter>
+<Parameter name="paramLanguage"/>
+<Parameter name="paramLanguage"/>
+<Parameter name="paramLanguage"/>
+<Parameter name="paramLanguage"/>
+
+
+    <Parameter name="key"></Parameter>
+        <Parameter name="adUserClient" type="replace" optional="true" after="ca_lostassets_v.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="ca_lostassets_v.AD_Org_ID IN (" text="'1'"/>
+
+    <Field name="adUserClient" value="void"></Field>
+    <Field name="adOrgClient" value="void"></Field>
+    <Field name="createdby" value="void"></Field>
+    
+    <Field name="trBgcolor" value="void"></Field>
+    <Field name="totalCount" value="void"></Field>
+    <Field name="dateTimeFormat" value=""></Field>
+  </SqlMethod>
+  
+  
+
+  <SqlMethod name="set" type="constant" return="multiple">
+      <SqlMethodComment>Create a registry</SqlMethodComment>
+      <Sql></Sql>
+
+<Parameter name="caAssetsstockedId"></Parameter><Parameter name="caLostassetsVId"></Parameter><Parameter name="snrMasterdataId"></Parameter><Parameter name="createdby"></Parameter><Parameter name="createdbyr"></Parameter><Parameter name="adOrgId"></Parameter><Parameter name="adClientId"></Parameter><Parameter name="serialnumber"></Parameter><Parameter name="isactive"></Parameter><Parameter name="mProductId"></Parameter><Parameter name="mProductIdr"></Parameter><Parameter name="updatedby"></Parameter><Parameter name="updatedbyr"></Parameter>
+   </SqlMethod>
+
+
+
+
+
+
+   <SqlMethod name="selectDefA34DC27BCDE04FB9AB46C81B7C5FDEDE_0" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as Createdby FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="CreatedbyR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDef9C7113F6DDE8400092EF6B5617228CBC_1" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Value), '')  || ' - ' || COALESCE(TO_CHAR(table1.Name), '') ) as M_Product_ID FROM M_Product table1 WHERE table1.isActive='Y' AND table1.M_Product_ID = ?  
+    ]]></Sql>
+<Parameter name="M_Product_IDR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDef40ABE8F65EBE4E659939517D43614974_2" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as Updatedby FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="UpdatedbyR"/>
+  </SqlMethod>
+
+
+
+
+
+
+
+
+
+
+  <SqlMethod name="update" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        UPDATE ca_lostassets_v
+        SET SNR_Masterdata_ID = (?) , CA_Assetsstocked_ID = (?) , Serialnumber = (?) , M_Product_ID = (?) , AD_Org_ID = (?) , CA_Lostassets_V_ID = (?) , AD_Client_ID = (?) , Isactive = (?) , updated = now(), updatedby = ? 
+        WHERE ca_lostassets_v.CA_Lostassets_V_ID = ? 
+        
+        AND ca_lostassets_v.AD_Client_ID IN ('1') 
+        AND ca_lostassets_v.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="snrMasterdataId"></Parameter> <Parameter name="caAssetsstockedId"></Parameter> <Parameter name="serialnumber"></Parameter> <Parameter name="mProductId"></Parameter> <Parameter name="adOrgId"></Parameter> <Parameter name="caLostassetsVId"></Parameter> <Parameter name="adClientId"></Parameter> <Parameter name="isactive"></Parameter> 
+    <Parameter name="updatedby"></Parameter>
+    <Parameter id="paramKey" name="caLostassetsVId"></Parameter>
+    
+    
+        <Parameter name="adUserClient" type="replace" optional="true" after="ca_lostassets_v.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="ca_lostassets_v.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="insert" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        INSERT INTO ca_lostassets_v 
+        (SNR_Masterdata_ID, CA_Assetsstocked_ID, Serialnumber, M_Product_ID, AD_Org_ID, CA_Lostassets_V_ID, AD_Client_ID, Isactive, created, createdby, updated, updatedBy)
+        VALUES ((?), (?), (?), (?), (?), (?), (?), (?), now(), ?, now(), ?)
+    ]]></Sql>
+    <Parameter name="snrMasterdataId"></Parameter> <Parameter name="caAssetsstockedId"></Parameter> <Parameter name="serialnumber"></Parameter> <Parameter name="mProductId"></Parameter> <Parameter name="adOrgId"></Parameter> <Parameter name="caLostassetsVId"></Parameter> <Parameter name="adClientId"></Parameter> <Parameter name="isactive"></Parameter> 
+    <Parameter name="createdby"></Parameter>
+    <Parameter name="updatedby"></Parameter>
+  </SqlMethod>
+
+  <SqlMethod name="delete" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM ca_lostassets_v
+        WHERE ca_lostassets_v.CA_Lostassets_V_ID = ? 
+        
+        AND ca_lostassets_v.AD_Client_ID IN ('1') 
+        AND ca_lostassets_v.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+    
+        <Parameter name="adUserClient" type="replace" optional="true" after="ca_lostassets_v.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="ca_lostassets_v.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="deleteTransactional" connection="true" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM ca_lostassets_v
+        WHERE ca_lostassets_v.CA_Lostassets_V_ID = ? 
+        
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+    
+  </SqlMethod>
+  
+  <SqlMethod name="selectOrg" type="preparedStatement" return="string">
+    <SqlMethodComment>Select for relation</SqlMethodComment>
+    <Sql><![CDATA[ 
+        SELECT AD_ORG_ID
+          FROM ca_lostassets_v
+         WHERE ca_lostassets_v.CA_Lostassets_V_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+  
+  <SqlMethod name="getCurrentDBTimestamp" type="preparedStatement" return="string">
+    <Sql><![CDATA[ 
+        SELECT to_char(Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp
+          FROM ca_lostassets_v
+         WHERE ca_lostassets_v.CA_Lostassets_V_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+</SqlClass>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlClass id="class" name="WorktimeAccount7D13783F51684D14A6C4C77D3AFF7828Data" package="org.openbravo.erpWindows.org.openz.timeservice.EmployeeWorktimeAccount">
+  <SqlClassComment>WAD Generated class</SqlClassComment>
+
+  <SqlMethod name="selectEdit" type="preparedStatement" return="multiple">
+    <SqlMethodComment>Select for edit</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT to_char(c_empworktimeaccount.Created, ?) as created, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = c_empworktimeaccount.CreatedBy) as CreatedByR, 
+        to_char(c_empworktimeaccount.Updated, ?) as updated, 
+        to_char(c_empworktimeaccount.Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp,  
+        c_empworktimeaccount.UpdatedBy, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = c_empworktimeaccount.UpdatedBy) as UpdatedByR,
+        c_empworktimeaccount.AD_Org_ID, 
+(CASE WHEN c_empworktimeaccount.AD_Org_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table1.Name), ''))),'') ) END) AS AD_Org_IDR, 
+c_empworktimeaccount.Value, 
+c_empworktimeaccount.ad_user_ID, 
+(CASE WHEN c_empworktimeaccount.ad_user_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table2.Name), ''))),'') ) END) AS ad_user_IDR, 
+c_empworktimeaccount.Wmonth, 
+c_empworktimeaccount.Wyear, 
+c_empworktimeaccount.Targethours, 
+c_empworktimeaccount.Workhours, 
+c_empworktimeaccount.Balance, 
+c_empworktimeaccount.Holiday_Entitlement, 
+c_empworktimeaccount.AD_Client_ID, 
+c_empworktimeaccount.C_Empworktimeaccount_ID, 
+COALESCE(c_empworktimeaccount.Isactive, 'N') AS Isactive, 
+ 
+        ? AS LANGUAGE 
+        FROM c_empworktimeaccount left join (select AD_Org_ID, Name from AD_Org) table1 on (c_empworktimeaccount.AD_Org_ID = table1.AD_Org_ID) left join (select AD_User_ID, Name from AD_User) table2 on (c_empworktimeaccount.ad_user_ID = table2.AD_User_ID)
+        WHERE 2=2 
+
+        AND 1=1 
+        AND c_empworktimeaccount.C_Empworktimeaccount_ID = ? 
+        AND c_empworktimeaccount.AD_Client_ID IN ('1') 
+           AND c_empworktimeaccount.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="dateTimeFormat"></Parameter>
+    <Parameter name="dateTimeFormat"></Parameter>
+    
+    <Parameter name="paramLanguage"></Parameter>
+
+
+    <Parameter name="key"></Parameter>
+        <Parameter name="adUserClient" type="replace" optional="true" after="c_empworktimeaccount.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="c_empworktimeaccount.AD_Org_ID IN (" text="'1'"/>
+
+    <Field name="adUserClient" value="void"></Field>
+    <Field name="adOrgClient" value="void"></Field>
+    <Field name="createdby" value="void"></Field>
+    
+    <Field name="trBgcolor" value="void"></Field>
+    <Field name="totalCount" value="void"></Field>
+    <Field name="dateTimeFormat" value=""></Field>
+  </SqlMethod>
+  
+  
+
+  <SqlMethod name="set" type="constant" return="multiple">
+      <SqlMethodComment>Create a registry</SqlMethodComment>
+      <Sql></Sql>
+
+<Parameter name="adUserId"></Parameter><Parameter name="adUserIdr"></Parameter><Parameter name="wyear"></Parameter><Parameter name="cEmpworktimeaccountId"></Parameter><Parameter name="createdby"></Parameter><Parameter name="createdbyr"></Parameter><Parameter name="updatedby"></Parameter><Parameter name="updatedbyr"></Parameter><Parameter name="holidayEntitlement"></Parameter><Parameter name="targethours"></Parameter><Parameter name="value"></Parameter><Parameter name="isactive"></Parameter><Parameter name="workhours"></Parameter><Parameter name="adClientId"></Parameter><Parameter name="wmonth"></Parameter><Parameter name="balance"></Parameter><Parameter name="adOrgId"></Parameter>
+   </SqlMethod>
+
+
+
+
+
+
+   <SqlMethod name="selectDefB75D76653C794688AAA3DE493FE83799_0" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as ad_user_ID FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="ad_user_IDR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDefD4D08B1F077243D8AA6B62E2CE199B5C_1" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as Createdby FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="CreatedbyR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDef4E2C5D44ABB04ADF9DC5A64B85C301F2_2" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as Updatedby FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="UpdatedbyR"/>
+  </SqlMethod>
+
+
+
+
+
+
+
+
+
+
+  <SqlMethod name="update" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        UPDATE c_empworktimeaccount
+        SET AD_Org_ID = (?) , Value = (?) , ad_user_ID = (?) , Wmonth = TO_NUMBER(?) , Wyear = TO_NUMBER(?) , Targethours = TO_NUMBER(?) , Workhours = TO_NUMBER(?) , Balance = TO_NUMBER(?) , Holiday_Entitlement = TO_NUMBER(?) , AD_Client_ID = (?) , C_Empworktimeaccount_ID = (?) , Isactive = (?) , updated = now(), updatedby = ? 
+        WHERE c_empworktimeaccount.C_Empworktimeaccount_ID = ? 
+        
+        AND c_empworktimeaccount.AD_Client_ID IN ('1') 
+        AND c_empworktimeaccount.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="adOrgId"></Parameter> <Parameter name="value"></Parameter> <Parameter name="adUserId"></Parameter> <Parameter name="wmonth"></Parameter> <Parameter name="wyear"></Parameter> <Parameter name="targethours"></Parameter> <Parameter name="workhours"></Parameter> <Parameter name="balance"></Parameter> <Parameter name="holidayEntitlement"></Parameter> <Parameter name="adClientId"></Parameter> <Parameter name="cEmpworktimeaccountId"></Parameter> <Parameter name="isactive"></Parameter> 
+    <Parameter name="updatedby"></Parameter>
+    <Parameter id="paramKey" name="cEmpworktimeaccountId"></Parameter>
+    
+    
+        <Parameter name="adUserClient" type="replace" optional="true" after="c_empworktimeaccount.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="c_empworktimeaccount.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="insert" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        INSERT INTO c_empworktimeaccount 
+        (AD_Org_ID, Value, ad_user_ID, Wmonth, Wyear, Targethours, Workhours, Balance, Holiday_Entitlement, AD_Client_ID, C_Empworktimeaccount_ID, Isactive, created, createdby, updated, updatedBy)
+        VALUES ((?), (?), (?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), (?), (?), (?), now(), ?, now(), ?)
+    ]]></Sql>
+    <Parameter name="adOrgId"></Parameter> <Parameter name="value"></Parameter> <Parameter name="adUserId"></Parameter> <Parameter name="wmonth"></Parameter> <Parameter name="wyear"></Parameter> <Parameter name="targethours"></Parameter> <Parameter name="workhours"></Parameter> <Parameter name="balance"></Parameter> <Parameter name="holidayEntitlement"></Parameter> <Parameter name="adClientId"></Parameter> <Parameter name="cEmpworktimeaccountId"></Parameter> <Parameter name="isactive"></Parameter> 
+    <Parameter name="createdby"></Parameter>
+    <Parameter name="updatedby"></Parameter>
+  </SqlMethod>
+
+  <SqlMethod name="delete" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM c_empworktimeaccount
+        WHERE c_empworktimeaccount.C_Empworktimeaccount_ID = ? 
+        
+        AND c_empworktimeaccount.AD_Client_ID IN ('1') 
+        AND c_empworktimeaccount.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+    
+        <Parameter name="adUserClient" type="replace" optional="true" after="c_empworktimeaccount.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="c_empworktimeaccount.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="deleteTransactional" connection="true" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM c_empworktimeaccount
+        WHERE c_empworktimeaccount.C_Empworktimeaccount_ID = ? 
+        
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+    
+  </SqlMethod>
+  
+  <SqlMethod name="selectOrg" type="preparedStatement" return="string">
+    <SqlMethodComment>Select for relation</SqlMethodComment>
+    <Sql><![CDATA[ 
+        SELECT AD_ORG_ID
+          FROM c_empworktimeaccount
+         WHERE c_empworktimeaccount.C_Empworktimeaccount_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+  
+  <SqlMethod name="getCurrentDBTimestamp" type="preparedStatement" return="string">
+    <Sql><![CDATA[ 
+        SELECT to_char(Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp
+          FROM c_empworktimeaccount
+         WHERE c_empworktimeaccount.C_Empworktimeaccount_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+</SqlClass>

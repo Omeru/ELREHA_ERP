@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="BWAReport" pageWidth="842" pageHeight="535" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="2.822369650268891"/>
+	<property name="ireport.x" value="1275"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="CLIENT_ID" class="java.lang.String"/>
+	<parameter name="DATE_FROM" class="java.util.Date"/>
+	<parameter name="DATE_TO" class="java.util.Date"/>
+	<parameter name="BWAHEADERID" class="java.lang.String"/>
+	<parameter name="BASE_DESIGN" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/stefan/OpenZ/OpenSourceTrunc/openz"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BASE_WEB" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="AD_ORG_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select orderno, name, headertext,subheadertext,footertext,zspr_get_bwastatus($P{DATE_FROM},$P{DATE_TO},$P{AD_ORG_ID}) as status,
+      CASE when $P{AD_ORG_ID}='0' then 'Konsolidierte Auswertung' else '' end as form,
+      CASE when $P{AD_ORG_ID}='0' then (select name from ad_client where ad_client_id=$P{CLIENT_ID}) else (select name from ad_org where ad_org_id=$P{AD_ORG_ID}) end as company,
+      isparent, bwaprefs_id,
+      zsfi_getfooterbwasum(bwaprefs_id,$P{DATE_FROM},$P{DATE_TO},$P{AD_ORG_ID},'N') as total,
+      zsfi_getfooterbwasum(bwaprefs_id,$P{DATE_FROM},$P{DATE_TO},$P{AD_ORG_ID},'Y') as totalVJ
+ from
+(
+   select bwaprefs.orderno as orderno, bwaprefs.name as name, bwaheader.headertext as headertext,bwaheader.subheadertext as subheadertext,bwaheader.footertext as footertext,
+       bwaprefs.isparent as isparent, bwaprefs.zspr_bwaprefs_id as bwaprefs_id
+       from zspr_bwaprefs bwaprefs,  zspr_bwaheader bwaheader,fact_acct_view, zspr_bwaprefacct bwaprefacct
+       where
+         bwaheader.ad_client_id=$P{CLIENT_ID}
+         and bwaheader.zspr_bwaheader_id = $P{BWAHEADERID}
+         and bwaprefs.zspr_bwaheader_id=bwaheader.zspr_bwaheader_id
+         and bwaprefs.parentpref is null
+         and bwaprefacct.zspr_bwaprefs_id=bwaprefs.zspr_bwaprefs_id
+         and bwaprefs.isactive='Y'
+         and fact_acct_view.ACCTVALUE like replace(bwaprefacct.acctmatch,'*','%')
+         and case when instr(bwaprefacct.acctmatch,'*')>0 then length(fact_acct_view.ACCTVALUE)=5 else length(fact_acct_view.ACCTVALUE)=4 end
+         and fact_acct_view.c_acctschema_id=(select distinct c_acctschema_id from ad_org_acctschema where CASE when $P{AD_ORG_ID}!='0' then ad_org_id=$P{AD_ORG_ID} else 1=1 END)
+         and bwaprefacct.c_acctschema_id=fact_acct_view.c_acctschema_id
+       GROUP BY  bwaprefs.orderno, bwaprefs.name, bwaheader.headertext,bwaheader.subheadertext,bwaheader.footertext, bwaprefs.isasset,bwaprefs.orderno,
+                 bwaprefs.isparent, bwaprefs_id,bwaprefs.allwowonlynegative,bwaprefs.allwowonlypositive
+) body
+GROUP BY  orderno, name, headertext,subheadertext,footertext,orderno,
+                 isparent, bwaprefs_id
+ORDER by orderno;]]>
+	</queryString>
+	<field name="orderno" class="java.math.BigDecimal"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="headertext" class="java.lang.String"/>
+	<field name="subheadertext" class="java.lang.String"/>
+	<field name="footertext" class="java.lang.String"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="form" class="java.lang.String"/>
+	<field name="company" class="java.lang.String"/>
+	<field name="isparent" class="java.lang.String"/>
+	<field name="bwaprefs_id" class="java.lang.String"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="totalvj" class="java.math.BigDecimal"/>
+	<variable name="SUBSUM" class="java.math.BigDecimal" calculation="Sum">
+		<initialValueExpression><![CDATA[java.math.BigDecimal.ZERO]]></initialValueExpression>
+	</variable>
+	<variable name="SUBSumVJ" class="java.math.BigDecimal" calculation="Sum">
+		<initialValueExpression><![CDATA[java.math.BigDecimal.ZERO]]></initialValueExpression>
+	</variable>
+	<variable name="TOTAL" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{total} == null ? new java.math.BigDecimal(0) : $F{total})]]></variableExpression>
+	</variable>
+	<variable name="TOTALVJ" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[($F{totalvj} == null ? new java.math.BigDecimal(0) : $F{totalvj})]]></variableExpression>
+	</variable>
+	<group name="bwa_prefs_SUB">
+		<groupExpression><![CDATA[$F{bwaprefs_id}]]></groupExpression>
+		<groupHeader>
+			<band height="12" splitType="Stretch">
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-3" mode="Opaque" x="0" y="1" width="456" height="11" forecolor="#000000" backcolor="#FFFFFF"/>
+					<box leftPadding="3"/>
+					<textElement verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="25" splitType="Stretch">
+				<staticText>
+					<reportElement key="staticText-2" mode="Opaque" x="456" y="1" width="92" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+					<box leftPadding="3" rightPadding="2"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Summe:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="false">
+					<reportElement key="textField-4" mode="Opaque" x="0" y="1" width="456" height="11" forecolor="#000000" backcolor="#FFFFFF"/>
+					<box leftPadding="2" rightPadding="3"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-5" mode="Opaque" x="549" y="1" width="79" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+					<box rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUBSUM}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement key="staticText-9" mode="Opaque" x="629" y="1" width="69" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+					<box rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[Vorjahr:]]></text>
+				</staticText>
+				<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="true">
+					<reportElement key="textField-22" mode="Opaque" x="698" y="1" width="119" height="10" forecolor="#000000" backcolor="#FFFFFF"/>
+					<box rightPadding="3"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8"/>
+						<paragraph rightIndent="2"/>
+					</textElement>
+					<textFieldExpression class="java.math.BigDecimal"><![CDATA[$V{SUBSumVJ}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="85" splitType="Stretch">
+			<textField pattern="dd.MM.yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-10" x="456" y="51" width="92" height="16"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{DATE_FROM}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd.MM.yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-12" x="629" y="51" width="69" height="16"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[$P{DATE_TO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-4" x="0" y="51" width="456" height="16"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Datumsbereich von:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-20" x="0" y="0" width="456" height="31"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{headertext}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-16" x="0" y="67" width="456" height="18"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Status:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-17" x="0" y="31" width="456" height="20"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Unternehmen:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement key="textField" x="629" y="31" width="69" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="629" y="67" width="69" height="18"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{status}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField" x="629" y="0" width="69" height="31"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{form}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-1" mode="Opaque" x="0" y="1" width="842" height="10"/>
+				<subreportParameter name="DATE_FROM">
+					<subreportParameterExpression><![CDATA[$P{DATE_FROM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_TO">
+					<subreportParameterExpression><![CDATA[$P{DATE_TO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="CLIENT_ID">
+					<subreportParameterExpression><![CDATA[$P{CLIENT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PARENT_ID">
+					<subreportParameterExpression><![CDATA[$F{bwaprefs_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="BWAHEADERID">
+					<subreportParameterExpression><![CDATA[$P{BWAHEADERID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="BASE_DESIGN">
+					<subreportParameterExpression><![CDATA[$P{BASE_DESIGN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="BASE_WEB">
+					<subreportParameterExpression><![CDATA[$P{BASE_WEB}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="AD_ORG_ID">
+					<subreportParameterExpression><![CDATA[$P{AD_ORG_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="SUBSUM" toVariable="SUBSUM"/>
+				<returnValue subreportVariable="SUBSumVJ" toVariable="SUBSumVJ"/>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{BASE_DESIGN} + "/org/openbravo/zsoft/finance/BWAReportDetail.jrxmlXLS.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport isUsingCache="true">
+				<reportElement key="subreport-2" x="0" y="1" width="842" height="10">
+					<printWhenExpression><![CDATA[(($F{isparent}.equals("N")) ? Boolean.TRUE : Boolean.FALSE)]]></printWhenExpression>
+				</reportElement>
+				<subreportParameter name="CLIENT_ID">
+					<subreportParameterExpression><![CDATA[$P{CLIENT_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_FROM">
+					<subreportParameterExpression><![CDATA[$P{DATE_FROM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="DATE_TO">
+					<subreportParameterExpression><![CDATA[$P{DATE_TO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="BWAPREFS_ID">
+					<subreportParameterExpression><![CDATA[$F{bwaprefs_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="BWAHEADERID">
+					<subreportParameterExpression><![CDATA[$P{BWAHEADERID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="BASE_DESIGN">
+					<subreportParameterExpression><![CDATA[$P{BASE_DESIGN}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="BASE_WEB">
+					<subreportParameterExpression><![CDATA[$P{BASE_WEB}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="AD_ORG_ID">
+					<subreportParameterExpression><![CDATA[$P{AD_ORG_ID}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="SUBSUM" toVariable="SUBSUM"/>
+				<returnValue subreportVariable="SUBSumVJ" toVariable="SUBSumVJ"/>
+				<subreportExpression class="java.lang.String"><![CDATA[$P{BASE_DESIGN} + "/org/openbravo/zsoft/finance/BWAReportAcct.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="12" splitType="Stretch">
+			<textField pattern="dd.MM.yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-17" x="52" y="1" width="404" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-8" x="0" y="1" width="52" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Druckdatum ]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="50" splitType="Stretch">
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField" x="549" y="6" width="79" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[($V{TOTAL}!=null)?$V{TOTAL}:new String(" ")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="false">
+				<reportElement key="textField-21" x="0" y="6" width="456" height="10"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{footertext}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00" isBlankWhenNull="false">
+				<reportElement key="textField-23" x="698" y="6" width="119" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+					<paragraph rightIndent="4"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[($V{TOTALVJ}!=null)?$V{TOTALVJ}:new String(" ")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="staticText-11" x="629" y="6" width="69" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[Vorjahr:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement key="staticText-18" x="0" y="41" width="52" height="9"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Druckdatum]]></text>
+			</staticText>
+			<textField pattern="dd.MM.yyyy" isBlankWhenNull="false">
+				<reportElement key="textField-25" x="52" y="41" width="404" height="9"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</lastPageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

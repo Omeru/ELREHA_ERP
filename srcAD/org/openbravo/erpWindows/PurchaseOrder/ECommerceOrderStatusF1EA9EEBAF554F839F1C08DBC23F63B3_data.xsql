@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SqlClass id="class" name="ECommerceOrderStatusF1EA9EEBAF554F839F1C08DBC23F63B3Data" package="org.openbravo.erpWindows.PurchaseOrder">
+  <SqlClassComment>WAD Generated class</SqlClassComment>
+
+  <SqlMethod name="selectEdit" type="preparedStatement" return="multiple">
+    <SqlMethodComment>Select for edit</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT to_char(zse_shoporderstatus.Created, ?) as created, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = zse_shoporderstatus.CreatedBy) as CreatedByR, 
+        to_char(zse_shoporderstatus.Updated, ?) as updated, 
+        to_char(zse_shoporderstatus.Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp,  
+        zse_shoporderstatus.UpdatedBy, 
+        (SELECT NAME FROM AD_USER u WHERE AD_USER_ID = zse_shoporderstatus.UpdatedBy) as UpdatedByR,
+        zse_shoporderstatus.C_Order_ID, 
+(CASE WHEN zse_shoporderstatus.C_Order_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table1.DocumentNo), ''))),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table1.Name), ''))),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(table1.DateOrdered, 'DD-MM-YYYY')),'')  || ' - ' || COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table1.GrandTotal), ''))),'') ) END) AS C_Order_IDR, 
+zse_shoporderstatus.ZSE_Shop_ID, 
+(CASE WHEN zse_shoporderstatus.ZSE_Shop_ID IS NULL THEN '' ELSE  (COALESCE(TO_CHAR(TO_CHAR(COALESCE(TO_CHAR(table2.Value), ''))),'') ) END) AS ZSE_Shop_IDR, 
+zse_shoporderstatus.Status, 
+(CASE WHEN zse_shoporderstatus.Status IS NULL THEN '' ELSE  ( COALESCE(TO_CHAR(list1.name),'') ) END) AS StatusR, 
+zse_shoporderstatus.Shopoderno, 
+zse_shoporderstatus.Message, 
+zse_shoporderstatus.Externalid, 
+zse_shoporderstatus.Datedelivered, 
+zse_shoporderstatus.Shipper, 
+zse_shoporderstatus.Trackingno, 
+COALESCE(zse_shoporderstatus.Issotrx, 'N') AS Issotrx, 
+zse_shoporderstatus.AD_Client_ID, 
+zse_shoporderstatus.AD_Org_ID, 
+COALESCE(zse_shoporderstatus.Isactive, 'N') AS Isactive, 
+zse_shoporderstatus.ZSE_Shoporderstatus_ID, 
+ 
+        ? AS LANGUAGE 
+        FROM zse_shoporderstatus left join (select C_Order_ID, DocumentNo, Name, DateOrdered, GrandTotal from C_Order) table1 on (zse_shoporderstatus.C_Order_ID = table1.C_Order_ID) left join (select ZSE_Shop_ID, Value from ZSE_Shop) table2 on (zse_shoporderstatus.ZSE_Shop_ID = table2.ZSE_Shop_ID) left join ad_ref_list_v list1 on (zse_shoporderstatus.Status = list1.value and list1.ad_reference_id = '9C600D5A50A24147B7613C160F5EA5E9' and list1.ad_language = ?) 
+        WHERE 2=2 
+
+        AND 1=1 
+        AND zse_shoporderstatus.ZSE_Shoporderstatus_ID = ? 
+        AND zse_shoporderstatus.AD_Client_ID IN ('1') 
+           AND zse_shoporderstatus.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="dateTimeFormat"></Parameter>
+    <Parameter name="dateTimeFormat"></Parameter>
+    
+    <Parameter name="paramLanguage"></Parameter>
+<Parameter name="paramLanguage"/>
+
+    <Parameter name="cOrderId" optional="true" after="AND 1=1 " id="paramKeyParent"> AND zse_shoporderstatus.C_Order_ID = ? </Parameter>
+    <Parameter name="key"></Parameter>
+        <Parameter name="adUserClient" type="replace" optional="true" after="zse_shoporderstatus.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="zse_shoporderstatus.AD_Org_ID IN (" text="'1'"/>
+
+    <Field name="adUserClient" value="void"></Field>
+    <Field name="adOrgClient" value="void"></Field>
+    <Field name="createdby" value="void"></Field>
+    
+    <Field name="trBgcolor" value="void"></Field>
+    <Field name="totalCount" value="void"></Field>
+    <Field name="dateTimeFormat" value=""></Field>
+  </SqlMethod>
+  
+  
+
+  <SqlMethod name="set" type="constant" return="multiple">
+      <SqlMethodComment>Create a registry</SqlMethodComment>
+      <Sql></Sql>
+    <Parameter name="cOrderId" id="paramKeyParent"></Parameter>
+<Parameter name="adClientId"></Parameter><Parameter name="issotrx"></Parameter><Parameter name="zseShoporderstatusId"></Parameter><Parameter name="createdby"></Parameter><Parameter name="createdbyr"></Parameter><Parameter name="externalid"></Parameter><Parameter name="shipper"></Parameter><Parameter name="trackingno"></Parameter><Parameter name="updatedby"></Parameter><Parameter name="updatedbyr"></Parameter><Parameter name="adOrgId"></Parameter><Parameter name="isactive"></Parameter><Parameter name="shopoderno"></Parameter><Parameter name="message"></Parameter><Parameter name="zseShopId"></Parameter><Parameter name="status"></Parameter><Parameter name="datedelivered"></Parameter>
+   </SqlMethod>
+
+
+
+
+
+
+   <SqlMethod name="selectDef05E4F0D6DB1F4BDFB370BCE936346934_0" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as Createdby FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="CreatedbyR"/>
+  </SqlMethod>
+
+   <SqlMethod name="selectDefA80A1F8192FC4B84A56DE233AFBB6453_1" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for auxiliar field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT  ( COALESCE(TO_CHAR(table1.Name), '') ) as Updatedby FROM AD_User table1 WHERE table1.isActive='Y' AND table1.AD_User_ID = ?  
+    ]]></Sql>
+<Parameter name="UpdatedbyR"/>
+  </SqlMethod>
+
+
+
+  <SqlMethod name="selectParentID" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>return the parent ID</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT zse_shoporderstatus.C_Order_ID AS NAME
+        FROM zse_shoporderstatus
+        WHERE zse_shoporderstatus.ZSE_Shoporderstatus_ID = ?
+    ]]></Sql>
+    <Parameter name="key"></Parameter>
+  </SqlMethod>
+
+   <SqlMethod name="selectParent" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for parent field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT (TO_CHAR(COALESCE(TO_CHAR(table1.DocumentNo), '')) || ' - ' || TO_CHAR(COALESCE(TO_CHAR(table1.Name), '')) || ' - ' || TO_CHAR(table1.DateOrdered, 'DD-MM-YYYY') || ' - ' || TO_CHAR(COALESCE(TO_CHAR(table1.GrandTotal), ''))) AS NAME FROM C_Order left join (select C_Order_ID, DocumentNo, Name, DateOrdered, GrandTotal from C_Order) table1 on (C_Order.C_Order_ID = table1.C_Order_ID) WHERE C_Order.C_Order_ID = ?  
+    ]]></Sql>
+<Parameter name="cOrderId"/>
+
+  </SqlMethod>
+
+
+
+   <SqlMethod name="selectParentTrl" type="preparedStatement" return="String" default="">
+    <SqlMethodComment>Select for parent field</SqlMethodComment>
+    <Sql><![CDATA[
+        SELECT (TO_CHAR(COALESCE(TO_CHAR(table1.DocumentNo), '')) || ' - ' || TO_CHAR(COALESCE(TO_CHAR(table1.Name), '')) || ' - ' || TO_CHAR(table1.DateOrdered, 'DD-MM-YYYY') || ' - ' || TO_CHAR(COALESCE(TO_CHAR(table1.GrandTotal), ''))) AS NAME FROM C_Order left join (select C_Order_ID, DocumentNo, Name, DateOrdered, GrandTotal from C_Order) table1 on (C_Order.C_Order_ID = table1.C_Order_ID) WHERE C_Order.C_Order_ID = ?  
+    ]]></Sql>
+<Parameter name="cOrderId"/>
+
+  </SqlMethod>
+
+
+
+
+
+
+
+
+  <SqlMethod name="update" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        UPDATE zse_shoporderstatus
+        SET C_Order_ID = (?) , ZSE_Shop_ID = (?) , Status = (?) , Shopoderno = (?) , Message = (?) , Externalid = (?) , Datedelivered = TO_DATE(?) , Shipper = (?) , Trackingno = (?) , Issotrx = (?) , AD_Client_ID = (?) , AD_Org_ID = (?) , Isactive = (?) , ZSE_Shoporderstatus_ID = (?) , updated = now(), updatedby = ? 
+        WHERE zse_shoporderstatus.ZSE_Shoporderstatus_ID = ? 
+                 AND zse_shoporderstatus.C_Order_ID = ? 
+        AND zse_shoporderstatus.AD_Client_ID IN ('1') 
+        AND zse_shoporderstatus.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="cOrderId"></Parameter> <Parameter name="zseShopId"></Parameter> <Parameter name="status"></Parameter> <Parameter name="shopoderno"></Parameter> <Parameter name="message"></Parameter> <Parameter name="externalid"></Parameter> <Parameter name="datedelivered"></Parameter> <Parameter name="shipper"></Parameter> <Parameter name="trackingno"></Parameter> <Parameter name="issotrx"></Parameter> <Parameter name="adClientId"></Parameter> <Parameter name="adOrgId"></Parameter> <Parameter name="isactive"></Parameter> <Parameter name="zseShoporderstatusId"></Parameter> 
+    <Parameter name="updatedby"></Parameter>
+    <Parameter id="paramKey" name="zseShoporderstatusId"></Parameter>
+    
+    <Parameter name="cOrderId" id="paramKeyParent"></Parameter>
+        <Parameter name="adUserClient" type="replace" optional="true" after="zse_shoporderstatus.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="zse_shoporderstatus.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="insert" type="preparedStatement" return="rowCount" static="false" connection="true">
+    <Sql><![CDATA[
+        INSERT INTO zse_shoporderstatus 
+        (C_Order_ID, ZSE_Shop_ID, Status, Shopoderno, Message, Externalid, Datedelivered, Shipper, Trackingno, Issotrx, AD_Client_ID, AD_Org_ID, Isactive, ZSE_Shoporderstatus_ID, created, createdby, updated, updatedBy)
+        VALUES ((?), (?), (?), (?), (?), (?), TO_DATE(?), (?), (?), (?), (?), (?), (?), (?), now(), ?, now(), ?)
+    ]]></Sql>
+    <Parameter name="cOrderId"></Parameter> <Parameter name="zseShopId"></Parameter> <Parameter name="status"></Parameter> <Parameter name="shopoderno"></Parameter> <Parameter name="message"></Parameter> <Parameter name="externalid"></Parameter> <Parameter name="datedelivered"></Parameter> <Parameter name="shipper"></Parameter> <Parameter name="trackingno"></Parameter> <Parameter name="issotrx"></Parameter> <Parameter name="adClientId"></Parameter> <Parameter name="adOrgId"></Parameter> <Parameter name="isactive"></Parameter> <Parameter name="zseShoporderstatusId"></Parameter> 
+    <Parameter name="createdby"></Parameter>
+    <Parameter name="updatedby"></Parameter>
+  </SqlMethod>
+
+  <SqlMethod name="delete" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM zse_shoporderstatus
+        WHERE zse_shoporderstatus.ZSE_Shoporderstatus_ID = ? 
+                 AND zse_shoporderstatus.C_Order_ID = ? 
+        AND zse_shoporderstatus.AD_Client_ID IN ('1') 
+        AND zse_shoporderstatus.AD_Org_ID IN ('1') 
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+        <Parameter name="cOrderId" id="paramKeyParent"></Parameter>
+        <Parameter name="adUserClient" type="replace" optional="true" after="zse_shoporderstatus.AD_Client_ID IN (" text="'1'"/>
+        <Parameter name="adOrgClient" type="replace" optional="true" after="zse_shoporderstatus.AD_Org_ID IN (" text="'1'"/>
+  </SqlMethod>
+
+  <SqlMethod name="deleteTransactional" connection="true" type="preparedStatement" return="rowCount">
+    <Sql><![CDATA[
+        DELETE FROM zse_shoporderstatus
+        WHERE zse_shoporderstatus.ZSE_Shoporderstatus_ID = ? 
+                 AND zse_shoporderstatus.C_Order_ID = ? 
+    ]]></Sql>
+    <Parameter name="param1"></Parameter>
+        <Parameter name="cOrderId" id="paramKeyParent"></Parameter>
+  </SqlMethod>
+  
+  <SqlMethod name="selectOrg" type="preparedStatement" return="string">
+    <SqlMethodComment>Select for relation</SqlMethodComment>
+    <Sql><![CDATA[ 
+        SELECT AD_ORG_ID
+          FROM zse_shoporderstatus
+         WHERE zse_shoporderstatus.ZSE_Shoporderstatus_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+  
+  <SqlMethod name="getCurrentDBTimestamp" type="preparedStatement" return="string">
+    <Sql><![CDATA[ 
+        SELECT to_char(Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp
+          FROM zse_shoporderstatus
+         WHERE zse_shoporderstatus.ZSE_Shoporderstatus_ID = ? 
+    ]]></Sql>
+    <Parameter name="id"></Parameter>
+  </SqlMethod>
+</SqlClass>
