@@ -407,7 +407,6 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
 	    String strReturn = "";
 	    PreparedStatement st = null;
 	    int iParameter = 0;
-	    int i = 0;
 	    try 
 	    {
 	      st = connectionProvider.getPreparedStatement(strSql);
@@ -417,10 +416,13 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
 	      while(result.next())
 	      {
 	    	  if(!result.wasNull())
-	    		  strReturn += ";"+result.getString(i);
+	    	  {
+	    		  strReturn += result.getString(1);
+	    		  strReturn += " "+result.getString(2);
+	    		  strReturn += " "+result.getString(3)+"</br>";
+	    	  }
 	    	  else
 	    		  strReturn += ";NULL";
-	    	  i++;
 	      }
 	      result.close();
 	    } 
