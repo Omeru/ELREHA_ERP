@@ -10,7 +10,6 @@ import javax.servlet.ServletException;
 import org.openbravo.data.FieldProvider;
 import org.openbravo.database.ConnectionProvider;
 import org.openbravo.data.UtilSql;
-import org.openbravo.data.FResponse;
 import java.util.*;
 
 class SLOrderAmtData implements FieldProvider {
@@ -411,8 +410,9 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
 	    int i = 0;
 	    try 
 	    {
-	      result = st.executeQuery(strSql);
-	      while(result.next()) 
+	      st = connectionProvider.getPreparedStatement(strSql);
+	      result = st.executeQuery();
+	      while(result.next())
 	      {
 	    	  strReturn.add(result.getString(i));
 	    	  i++;
