@@ -407,6 +407,7 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
 	    String strReturn = "";
 	    PreparedStatement st = null;
 	    int iParameter = 0;
+	    int count = 1;
 	    try 
 	    {
 	      st = connectionProvider.getPreparedStatement(strSql);
@@ -419,6 +420,7 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
 	    	  {
 	    		  strReturn += UtilSql.getValue(result, "total");
 	    		  strReturn +="</br>";
+	    		  count++;
 	    	  }
 	    	  else
 	    		  strReturn += ";NULL";
@@ -443,6 +445,7 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
 	        ignore.printStackTrace();
 	      }
 	    }
-	    return(strReturn);
+	    return(count+"");
+	    //return(strReturn);
 	  }
 }
