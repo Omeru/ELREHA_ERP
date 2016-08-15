@@ -417,9 +417,8 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
 	      {
 	    	  if(!result.wasNull())
 	    	  {
-	    		  strReturn += result.getString(1);
-	    		  strReturn += " "+result.getString(2);
-	    		  strReturn += " "+result.getString(3)+"</br>";
+	    		  strReturn += UtilSql.getValue(result, "total");
+	    		  strReturn +="</br>";
 	    	  }
 	    	  else
 	    		  strReturn += ";NULL";
