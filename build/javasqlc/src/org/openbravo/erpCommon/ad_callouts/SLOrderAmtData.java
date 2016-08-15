@@ -403,20 +403,27 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
   }
   public static ArrayList<String> elr_getPriceAdjustment(ConnectionProvider connectionProvider, String mProductId, String cBpartnerId) throws ServletException 
   {
-	    String strSql = "SELECT qty_from, qty_to, fixed from m_offer_v WHERE m_product_id = '"+mProductId+"' AND c_bpartner_id = '"+cBpartnerId+"'";
+	  	String strSql = "SELECT qty_from, qty_to, fixed from m_offer_v WHERE m_product_id = ? AND c_bpartner_id = ?";
 	    ResultSet result;
 	    ArrayList<String> strReturn = new ArrayList<String>();
 	    PreparedStatement st = null;
+	    int iParameter = 0;
 	    int i = 0;
 	    try 
 	    {
 	      st = connectionProvider.getPreparedStatement(strSql);
+	      iParameter++; UtilSql.setValue(st, iParameter, 12, null, mProductId);
+	      iParameter++; UtilSql.setValue(st, iParameter, 12, null, cBpartnerId);
 	      result = st.executeQuery();
 	      while(result.next())
 	      {
-	    	  strReturn.add(result.getString(i));
+	    	  if(!result.wasNull())
+	    		  strReturn.add(result.getString(i));
+	    	  else
+	    		  strReturn.add("NULL");
 	    	  i++;
 	      }
+	      result.close();
 	    } 
 	    catch(SQLException e)
 	    {
