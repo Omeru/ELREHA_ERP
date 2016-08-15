@@ -200,7 +200,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
       
       
     }
-    
+
     // calculating discount
     if (strChanged.equals("inppriceactual")) {
       if ("Y".equals(cancelPriceAd)) {
@@ -333,11 +333,8 @@ public class SL_Order_Amt  extends ProductTextHelper  {
         resultado.append("new Array('MESSAGE', \""
             + Utility.messageBD(this, "UnderLimitPrice", vars.getLanguage()) + "\"),");
     }
-    if(strChanged.equals("inpmProductId"))
-    {
-    	resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) ) + "\"),");
-    }
-
+	resultado.append("new Array('MESSAGE', \"" + "\"),"); // reset Message, reset MessageBox
+	resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) ) + "\"),");
     BigDecimal lineNetAmt;
     if (OrderQTY.compareTo(ZERO)!=0) lineNetAmt = OrderQTY.multiply(priceActual);
     else lineNetAmt = qtyOrdered.multiply(priceActual);
