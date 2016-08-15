@@ -200,6 +200,11 @@ public class SL_Order_Amt  extends ProductTextHelper  {
       
       
     }
+    if(strChanged.equals("inpmProductId"))
+    {
+    	resultado.append("new Array('MESSAGE', \"" + "\"),"); // reset Message, reset MessageBox
+    	resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) ) + "\"),");
+    }
     
     // calculating discount
     if (strChanged.equals("inppriceactual")) {
@@ -332,10 +337,6 @@ public class SL_Order_Amt  extends ProductTextHelper  {
           && priceActual.compareTo(priceLimit) < 0)
         resultado.append("new Array('MESSAGE', \""
             + Utility.messageBD(this, "UnderLimitPrice", vars.getLanguage()) + "\"),");
-    }
-    if(strChanged.equals("inpmProductId"))
-    {
-    	resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) ) + "\"),");
     }
 
     BigDecimal lineNetAmt;
