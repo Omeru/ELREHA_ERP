@@ -244,7 +244,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
             BigDecimal qtyPurchaseStd = new BigDecimal(SLOrderAmtData.mrp_getpo_qtystd(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
             BigDecimal qtyPurchaseMin = new BigDecimal(SLOrderAmtData.mrp_getpo_qtymin(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
             String qtyPurchaseIsMultiple = new String(SLOrderAmtData.mrp_getpo_ismultipleofminimumqty(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
-    		if(!SLOrderAmtData.elr_getPriceAdjustment(this, strProduct, dataOrder[0].cBpartnerId).isEmpty())
+    		if(SLOrderAmtData.elr_getPriceAdjustment(this, strProduct, dataOrder[0].cBpartnerId).size()<1)
     	    {
                 resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS
                         (
