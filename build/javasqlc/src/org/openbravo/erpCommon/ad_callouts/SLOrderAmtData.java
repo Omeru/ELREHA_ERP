@@ -2,7 +2,6 @@
 package org.openbravo.erpCommon.ad_callouts;
 
 import java.sql.*;
-import java.util.ArrayList;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -401,11 +400,11 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
     }
     return(strReturn);
   }
-  public static ArrayList<String> elr_getPriceAdjustment(ConnectionProvider connectionProvider, String mProductId, String cBpartnerId) throws ServletException 
+  public static String mrp_elr_getPriceAd(ConnectionProvider connectionProvider, String mProductId, String cBpartnerId) throws ServletException 
   {
 	  	String strSql = "SELECT qty_from, qty_to, fixed from m_offer_v WHERE m_product_id = ? AND c_bpartner_id = ?";
 	    ResultSet result;
-	    ArrayList<String> strReturn = new ArrayList<String>();
+	    String strReturn = "";
 	    PreparedStatement st = null;
 	    int iParameter = 0;
 	    int i = 0;
@@ -418,9 +417,9 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
 	      while(result.next())
 	      {
 	    	  if(!result.wasNull())
-	    		  strReturn.add(result.getString(i));
+	    		  strReturn += ";"+result.getString(i);
 	    	  else
-	    		  strReturn.add("NULL");
+	    		  strReturn += ";NULL";
 	    	  i++;
 	      }
 	      result.close();
