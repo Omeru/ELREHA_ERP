@@ -402,4 +402,40 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
     }
     return(strReturn);
   }
+  public static ArrayList<String> elr_getPriceAdjustment(ConnectionProvider connectionProvider, String mProductId, String cBpartnerId) throws ServletException 
+  {
+	    String strSql = "SELECT qty_from, qty_to, fixed from m_offer_v WHERE m_product_id = '"+mProductId+"' AND c_bpartner_id = '"+cBpartnerId+"'";
+	    ResultSet result;
+	    ArrayList<String> strReturn = new ArrayList<String>();
+	    PreparedStatement st = null;
+	    int i = 0;
+	    try 
+	    {
+	      result = st.executeQuery(strSql);
+	      while(result.next()) 
+	      {
+	    	  strReturn.add(result.getString(i));
+	    	  i++;
+	      }
+	    } 
+	    catch(SQLException e)
+	    {
+	      log4j.error("SQL error in query: " + strSql + "Exception:"+ e);
+	      throw new ServletException("@CODE=" + e.getSQLState() + "@" + e.getMessage());
+	    } catch(Exception ex)
+	    {
+	      log4j.error("Exception in query: " + strSql + "Exception:"+ ex);
+	      throw new ServletException("@CODE=@" + ex.getMessage());
+	    } finally 
+	    {
+	      try 
+	      {
+	        connectionProvider.releasePreparedStatement(st);
+	      } catch(Exception ignore)
+	      {
+	        ignore.printStackTrace();
+	      }
+	    }
+	    return(strReturn);
+	  }
 }

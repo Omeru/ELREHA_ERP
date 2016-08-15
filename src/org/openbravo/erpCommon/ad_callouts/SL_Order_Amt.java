@@ -173,7 +173,6 @@ public class SL_Order_Amt  extends ProductTextHelper  {
     // perform link (used as button)
     if (strChanged.equals("QtyOrdered")) {
       BigDecimal qtyPurchase = new BigDecimal(SLOrderAmtData.mrp_getpo_qty(this, strProduct, dataOrder[0].cBpartnerId, OrderQTY.compareTo(BigDecimal.ZERO)==0?qtyOrdered.toString():OrderQTY.toString(),strOrderUOM,strMManufacturerID));
-      
       resultado.append("new Array('MESSAGE', \"" + "\"),"); // reset Message, reset MessageBox
       resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "ZSMP_PurchaseDefault_Excec", vars.getLanguage()) ) + "\"),");
       
@@ -245,16 +244,33 @@ public class SL_Order_Amt  extends ProductTextHelper  {
             BigDecimal qtyPurchaseStd = new BigDecimal(SLOrderAmtData.mrp_getpo_qtystd(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
             BigDecimal qtyPurchaseMin = new BigDecimal(SLOrderAmtData.mrp_getpo_qtymin(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
             String qtyPurchaseIsMultiple = new String(SLOrderAmtData.mrp_getpo_ismultipleofminimumqty(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
+    		if(!SLOrderAmtData.elr_getPriceAdjustment(this, strProduct, dataOrder[0].cBpartnerId).isEmpty())
+    	    {
+                resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS
+                        (
+                          Utility.messageBD(this, "ZSMP_PurchaseDefault",        vars.getLanguage()) + ":" +  "</br></br>" + 
+                          Utility.messageBD(this, "ZSMP_PurchaseDefault_QtyStd", vars.getLanguage()) + " = " + qtyPurchaseStd.toString() + "</br>" + 
+                          Utility.messageBD(this, "ZSMP_PurchaseDefault_QtyMin", vars.getLanguage()) + " = " + qtyPurchaseMin.toString() + "</br>" +
+                          Utility.messageBD(this, "ZSMP_PurchaseDefault_IsMult", vars.getLanguage()) + " = " + qtyPurchaseIsMultiple.toString() + "</br>" +
+                          Utility.messageBD(this, "ZSMP_PurchaseDefault_Qty",    vars.getLanguage()) + " = " + qtyPurchase.toString() + "  "  +  "</br>" +
+                          Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) + "</br>" +
+                          "<input type=\"button\" value=\"Anpassen\" href=\"#\"  style=\"cursor:pointer;\" onclick=\"submitCommandFormParameter('DEFAULT', frmMain.inpLastFieldChanged, 'QtyOrdered', false, null, '../ad_callouts/SL_Order_Amt.html', 'hiddenFrame', null, null, true); return false;\" class=\"LabelLink\">"
+                        ) + "\"),");
+    	    }
+    		else
+    		{
             resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS
             (
               Utility.messageBD(this, "ZSMP_PurchaseDefault",        vars.getLanguage()) + ":" +  "</br></br>" + 
               Utility.messageBD(this, "ZSMP_PurchaseDefault_QtyStd", vars.getLanguage()) + " = " + qtyPurchaseStd.toString() + "</br>" + 
               Utility.messageBD(this, "ZSMP_PurchaseDefault_QtyMin", vars.getLanguage()) + " = " + qtyPurchaseMin.toString() + "</br>" +
-              Utility.messageBD(this, "ZSMP_PurchaseDefault_IsMult", vars.getLanguage()) + " = " + qtyPurchaseIsMultiple.toString() + "</br></br>" +
+              Utility.messageBD(this, "ZSMP_PurchaseDefault_IsMult", vars.getLanguage()) + " = " + qtyPurchaseIsMultiple.toString() + "</br>" +
               Utility.messageBD(this, "ZSMP_PurchaseDefault_Qty",    vars.getLanguage()) + " = " + qtyPurchase.toString() + "  "  + // "</br>" +
               "<input type=\"button\" value=\"Anpassen\" href=\"#\"  style=\"cursor:pointer;\" onclick=\"submitCommandFormParameter('DEFAULT', frmMain.inpLastFieldChanged, 'QtyOrdered', false, null, '../ad_callouts/SL_Order_Amt.html', 'hiddenFrame', null, null, true); return false;\" class=\"LabelLink\">"
             ) + "\"),");
-          } else {
+          } 
+    		}
+          else {
             resultado.append("new Array('MESSAGE', \"" + "\"),"); // reset Message, reset MessageBox
           }
         } 
@@ -332,15 +348,12 @@ public class SL_Order_Amt  extends ProductTextHelper  {
         resultado.append("new Array('MESSAGE', \""
             + Utility.messageBD(this, "UnderLimitPrice", vars.getLanguage()) + "\"),");
     }
-	resultado.append("new Array('MESSAGE', \"" + "\"),"); // reset Message, reset MessageBox
-	resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) ) + "\"),");
     BigDecimal lineNetAmt;
     if (OrderQTY.compareTo(ZERO)!=0) lineNetAmt = OrderQTY.multiply(priceActual);
     else lineNetAmt = qtyOrdered.multiply(priceActual);
     if (lineNetAmt.scale() > StdPrecision)
       lineNetAmt = lineNetAmt.setScale(StdPrecision, BigDecimal.ROUND_HALF_UP);
     resultado.append("new Array(\"inplinenetamt\", " + lineNetAmt.toString() + ")");
-
     resultado.append(");");
     xmlDocument.setParameter("array", resultado.toString());
     xmlDocument.setParameter("frameName", "appFrame");
