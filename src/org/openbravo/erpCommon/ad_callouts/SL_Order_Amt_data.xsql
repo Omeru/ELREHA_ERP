@@ -113,7 +113,7 @@
     <Parameter name="mManufacturerId"/>
     <Parameter name="cBpartnerId"/>
   </SqlMethod>
-    <SqlMethod name="mrp_elr_getPriceAd" type="preparedStatement" return="String" default="0">
+    <SqlMethod name="mrp_elr_getPriceAd" type="preparedStatement" return="multiple">
     <SqlMethodComment></SqlMethodComment>
     <Sql>
        SELECT qty_from, qty_to, fixed from m_offer_v WHERE m_product_id = ? AND c_bpartner_id = ?

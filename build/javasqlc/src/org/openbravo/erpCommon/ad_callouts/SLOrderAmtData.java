@@ -400,7 +400,7 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
     }
     return(strReturn);
   }
-  public static String mrp_elr_getPriceAd(ConnectionProvider connectionProvider, String mProductId, String cBpartnerId) throws ServletException 
+  public static String[] mrp_elr_getPriceAd(ConnectionProvider connectionProvider, String mProductId, String cBpartnerId) throws ServletException 
   {
 	  	String strSql = "SELECT qty_from, qty_to, fixed from m_offer_v WHERE m_product_id = ? AND c_bpartner_id = ?";
 	    ResultSet result;
