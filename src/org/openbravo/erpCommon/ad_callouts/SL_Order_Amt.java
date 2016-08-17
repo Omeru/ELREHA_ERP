@@ -268,7 +268,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
     		}
           else 
           {
-            resultado.append("new Array('MESSAGE', \"" + "\"),"); // reset Message, reset MessageBox
+            //resultado.append("new Array('MESSAGE', \"" + "\"),"); // reset Message, reset MessageBox
           }
         } 
         if (priceActual.compareTo(ZERO)!=0 ) {
