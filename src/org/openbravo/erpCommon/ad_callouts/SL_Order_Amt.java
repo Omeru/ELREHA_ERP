@@ -29,7 +29,6 @@ public class SL_Order_Amt  extends ProductTextHelper  {
   private static final long serialVersionUID = 1L;
   public SLOrderElrehaData[] res;
   public String elr_message;
-  public boolean elr_msg_flag = false;
 
   private static final BigDecimal ZERO = new BigDecimal(0.0);
 
@@ -176,14 +175,16 @@ public class SL_Order_Amt  extends ProductTextHelper  {
 		}
 	}
 
-    
+	if(elr_message.length()>0)
+	{
+		resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) ) + ":</br>" + elr_buildPriceAdString() + "\"),");
+	}
 
     // perform link (used as button)
     if (strChanged.equals("QtyOrdered")) {
       BigDecimal qtyPurchase = new BigDecimal(SLOrderAmtData.mrp_getpo_qty(this, strProduct, dataOrder[0].cBpartnerId, OrderQTY.compareTo(BigDecimal.ZERO)==0?qtyOrdered.toString():OrderQTY.toString(),strOrderUOM,strMManufacturerID));
       resultado.append("new Array('MESSAGE', \"" + "\"),"); // reset Message, reset MessageBox
       resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "ZSMP_PurchaseDefault_Excec", vars.getLanguage()) ) + elr_message +"\"),");
-      elr_msg_flag = true;
       
       int stdPrecision = strPrecision.equals("") ? 0 : Integer.valueOf(strPrecision).intValue();
       String strInitUOM = SLInvoiceConversionData.initUOMId(this, strOrderUOM);
@@ -251,7 +252,6 @@ public class SL_Order_Amt  extends ProductTextHelper  {
           BigDecimal qtyPurchase = new BigDecimal(SLOrderAmtData.mrp_getpo_qty(this, strProduct, dataOrder[0].cBpartnerId, OrderQTY.compareTo(BigDecimal.ZERO)==0?qtyOrdered.toString():OrderQTY.toString(),strOrderUOM,strMManufacturerID));
           if (!qtyPurchase.equals(OrderQTY.compareTo(BigDecimal.ZERO)==0?qtyOrdered:OrderQTY)) 
           {
-        	elr_msg_flag = true;
             priomes=true;
             BigDecimal qtyPurchaseStd = new BigDecimal(SLOrderAmtData.mrp_getpo_qtystd(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
             BigDecimal qtyPurchaseMin = new BigDecimal(SLOrderAmtData.mrp_getpo_qtymin(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
@@ -281,7 +281,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
                   Utility.messageBD(this, "ZSPM_PriceActual_changed",    vars.getLanguage()) + " = " + strPJS + "  "  + // "</br>" +
                   "<input type=\"button\" value=\"Anpassen\" href=\"#\"  style=\"cursor:pointer;\" onclick=\"PunktKomma("+strPriceActual+");\" class=\"LabelLink\">"
                 ) + elr_message +"\"),");  
-              elr_msg_flag = true;}
+              }
         resultado.append("new Array(\"inppriceactual\", " + priceActual.toString()  + "),");
         }
         
@@ -319,7 +319,6 @@ public class SL_Order_Amt  extends ProductTextHelper  {
               resultado.append("new Array('MESSAGE', \""
                   + FormatUtilities.replaceJS(Utility.messageBD(this, "StockLimit", vars
                       .getLanguage())) + elr_message +"\"),");
-              elr_msg_flag = true;
             }
           } else {
             if (!strAttribute.equals("") && strAttribute != null) {
@@ -331,7 +330,6 @@ public class SL_Order_Amt  extends ProductTextHelper  {
                 resultado.append("new Array('MESSAGE', \""
                     + FormatUtilities.replaceJS(Utility.messageBD(this, "StockLimit", vars
                         .getLanguage())) + elr_message +"\"),");
-                elr_msg_flag = true;
               }
             }
           }
@@ -348,7 +346,6 @@ public class SL_Order_Amt  extends ProductTextHelper  {
       {
         resultado.append("new Array('MESSAGE', \""
             + Utility.messageBD(this, "UnderLimitPrice", vars.getLanguage()) + elr_message + "\"),");
-        elr_msg_flag = true;
       }
     }
     BigDecimal lineNetAmt;
@@ -357,11 +354,6 @@ public class SL_Order_Amt  extends ProductTextHelper  {
     if (lineNetAmt.scale() > StdPrecision)
       lineNetAmt = lineNetAmt.setScale(StdPrecision, BigDecimal.ROUND_HALF_UP);
     resultado.append("new Array(\"inplinenetamt\", " + lineNetAmt.toString() + ")");
-    	//TODO!!!
-        resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS
-                (
-                Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) + ":</br>" + elr_buildPriceAdString()
-                )+ "\"),");
     resultado.append(");");
     xmlDocument.setParameter("array", resultado.toString());
     xmlDocument.setParameter("frameName", "appFrame");
