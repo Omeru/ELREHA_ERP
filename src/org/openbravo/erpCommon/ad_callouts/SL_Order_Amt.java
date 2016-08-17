@@ -182,7 +182,8 @@ public class SL_Order_Amt  extends ProductTextHelper  {
     if (strChanged.equals("QtyOrdered")) {
       BigDecimal qtyPurchase = new BigDecimal(SLOrderAmtData.mrp_getpo_qty(this, strProduct, dataOrder[0].cBpartnerId, OrderQTY.compareTo(BigDecimal.ZERO)==0?qtyOrdered.toString():OrderQTY.toString(),strOrderUOM,strMManufacturerID));
       resultado.append("new Array('MESSAGE', \"" + "\"),"); // reset Message, reset MessageBox
-      resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "ZSMP_PurchaseDefault_Excec", vars.getLanguage()) ) + "\"),");
+      resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "ZSMP_PurchaseDefault_Excec", vars.getLanguage()) ) + elr_message +"\"),");
+      elr_msg_flag = true;
       
       int stdPrecision = strPrecision.equals("") ? 0 : Integer.valueOf(strPrecision).intValue();
       String strInitUOM = SLInvoiceConversionData.initUOMId(this, strOrderUOM);
@@ -279,7 +280,8 @@ public class SL_Order_Amt  extends ProductTextHelper  {
                 (
                   Utility.messageBD(this, "ZSPM_PriceActual_changed",    vars.getLanguage()) + " = " + strPJS + "  "  + // "</br>" +
                   "<input type=\"button\" value=\"Anpassen\" href=\"#\"  style=\"cursor:pointer;\" onclick=\"PunktKomma("+strPriceActual+");\" class=\"LabelLink\">"
-                ) + "\"),");  }
+                ) + elr_message +"\"),");  
+              elr_msg_flag = true;}
         resultado.append("new Array(\"inppriceactual\", " + priceActual.toString()  + "),");
         }
         
@@ -316,7 +318,8 @@ public class SL_Order_Amt  extends ProductTextHelper  {
             if (stockSecurity.compareTo(resultStock) > 0) {
               resultado.append("new Array('MESSAGE', \""
                   + FormatUtilities.replaceJS(Utility.messageBD(this, "StockLimit", vars
-                      .getLanguage())) + "\"),");
+                      .getLanguage())) + elr_message +"\"),");
+              elr_msg_flag = true;
             }
           } else {
             if (!strAttribute.equals("") && strAttribute != null) {
@@ -327,7 +330,8 @@ public class SL_Order_Amt  extends ProductTextHelper  {
               if (stockSecurity.compareTo(resultStock) > 0) {
                 resultado.append("new Array('MESSAGE', \""
                     + FormatUtilities.replaceJS(Utility.messageBD(this, "StockLimit", vars
-                        .getLanguage())) + "\"),");
+                        .getLanguage())) + elr_message +"\"),");
+                elr_msg_flag = true;
               }
             }
           }
@@ -341,8 +345,11 @@ public class SL_Order_Amt  extends ProductTextHelper  {
       // Check Price Limit?
       if (enforced && priceLimit.compareTo(BigDecimal.ZERO) != 0
           && priceActual.compareTo(priceLimit) < 0)
+      {
         resultado.append("new Array('MESSAGE', \""
-            + Utility.messageBD(this, "UnderLimitPrice", vars.getLanguage()) + "\"),");
+            + Utility.messageBD(this, "UnderLimitPrice", vars.getLanguage()) + elr_message + "\"),");
+        elr_msg_flag = true;
+      }
     }
     BigDecimal lineNetAmt;
     if (OrderQTY.compareTo(ZERO)!=0) lineNetAmt = OrderQTY.multiply(priceActual);
@@ -350,13 +357,11 @@ public class SL_Order_Amt  extends ProductTextHelper  {
     if (lineNetAmt.scale() > StdPrecision)
       lineNetAmt = lineNetAmt.setScale(StdPrecision, BigDecimal.ROUND_HALF_UP);
     resultado.append("new Array(\"inplinenetamt\", " + lineNetAmt.toString() + ")");
-    if(!elr_msg_flag && elr_isDataAvailable())
-    {
+    	//TODO!!!
         resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS
                 (
                 Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) + ":</br>" + elr_buildPriceAdString()
                 )+ "\"),");
-    }
     resultado.append(");");
     xmlDocument.setParameter("array", resultado.toString());
     xmlDocument.setParameter("frameName", "appFrame");
