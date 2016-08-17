@@ -222,7 +222,6 @@ COALESCE(M_Offer_V.Issalesoffer, 'N') AS Issalesoffer,
     ]]></Sql>
     <Parameter name="id"></Parameter>
   </SqlMethod>
-  
   <SqlMethod name="getCurrentDBTimestamp" type="preparedStatement" return="string">
     <Sql><![CDATA[ 
         SELECT to_char(Updated, 'YYYYMMDDHH24MISS') as Updated_Time_Stamp

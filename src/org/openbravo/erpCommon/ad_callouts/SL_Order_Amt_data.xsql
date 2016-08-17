@@ -113,10 +113,10 @@
     <Parameter name="mManufacturerId"/>
     <Parameter name="cBpartnerId"/>
   </SqlMethod>
-    <SqlMethod name="mrp_elr_getPriceAd" type="preparedStatement" return="multiple">
+  <SqlMethod name="mrp_elr_getPriceAd" type="preparedStatement" return="multiple">
     <SqlMethodComment></SqlMethodComment>
     <Sql>
-       SELECT qty_from, qty_to, fixed from m_offer_v WHERE m_product_id = ? AND c_bpartner_id = ?
+       SELECT qty_from as stdprecision, qty_to as priceprecision, fixed as enforcepricelimit from m_offer_v WHERE m_product_id = ? AND c_bpartner_id = ?
     </Sql>
     <Parameter name="mProductId"/>
     <Parameter name="cBpartnerId"/>
