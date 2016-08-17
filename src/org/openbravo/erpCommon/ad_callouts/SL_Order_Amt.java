@@ -19,8 +19,6 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-
 import org.openbravo.base.secureApp.VariablesSecureApp;
 import org.openbravo.erpCommon.utility.Utility;
 import org.openbravo.utils.FormatUtilities;
@@ -29,6 +27,7 @@ import org.openz.controller.callouts.CalloutStructure;
 
 public class SL_Order_Amt  extends ProductTextHelper  {
   private static final long serialVersionUID = 1L;
+  public SLOrderElrehaData[] res;
 
   private static final BigDecimal ZERO = new BigDecimal(0.0);
 
@@ -147,6 +146,9 @@ public class SL_Order_Amt  extends ProductTextHelper  {
 
 
     SLOrderProductData[] dataOrder = SLOrderProductData.select(this, strCOrderId);
+    
+    // ELREHA GmbH > Some message tests!
+     res = SLOrderElrehaData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId);
    
     // FW: Use discount?
 	if (strChanged.equals("inpcancelpricead")) {
@@ -238,39 +240,28 @@ public class SL_Order_Amt  extends ProductTextHelper  {
        // Standard- bzw. Mindest-Bestellmenge aus Einkauf (m_product_po) beruecksichtigen, wenn hinterlegt     
         if (strChanged.equals("inpqtyordered")||strChanged.equals("inpmManufacturerId")) {
           BigDecimal qtyPurchase = new BigDecimal(SLOrderAmtData.mrp_getpo_qty(this, strProduct, dataOrder[0].cBpartnerId, OrderQTY.compareTo(BigDecimal.ZERO)==0?qtyOrdered.toString():OrderQTY.toString(),strOrderUOM,strMManufacturerID));
-          if (!qtyPurchase.equals(OrderQTY.compareTo(BigDecimal.ZERO)==0?qtyOrdered:OrderQTY)) {
+          if (!qtyPurchase.equals(OrderQTY.compareTo(BigDecimal.ZERO)==0?qtyOrdered:OrderQTY)) 
+          {
             priomes=true;
             BigDecimal qtyPurchaseStd = new BigDecimal(SLOrderAmtData.mrp_getpo_qtystd(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
             BigDecimal qtyPurchaseMin = new BigDecimal(SLOrderAmtData.mrp_getpo_qtymin(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
-            String qtyPurchaseIsMultiple = new String(SLOrderAmtData.mrp_getpo_ismultipleofminimumqty(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
-    		if(SLOrderElrehaData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId).length > 0 && SLOrderElrehaData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId)!=null)
-    	    {
-    			SLOrderElrehaData[] res = SLOrderElrehaData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId);
-                resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS
+            String qtyPurchaseIsMultiple = new String(SLOrderAmtData.mrp_getpo_ismultipleofminimumqty(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));			
+            resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS
                         (
                           Utility.messageBD(this, "ZSMP_PurchaseDefault",        vars.getLanguage()) + ":" +  "</br></br>" + 
                           Utility.messageBD(this, "ZSMP_PurchaseDefault_QtyStd", vars.getLanguage()) + " = " + qtyPurchaseStd.toString() + "</br>" + 
                           Utility.messageBD(this, "ZSMP_PurchaseDefault_QtyMin", vars.getLanguage()) + " = " + qtyPurchaseMin.toString() + "</br>" +
                           Utility.messageBD(this, "ZSMP_PurchaseDefault_IsMult", vars.getLanguage()) + " = " + qtyPurchaseIsMultiple.toString() + "</br>" +
                           Utility.messageBD(this, "ZSMP_PurchaseDefault_Qty",    vars.getLanguage()) + " = " + qtyPurchase.toString() + "  "  +  "</br>" +
-                          Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) + ":</br>" + res[0].qtyfrom +" "+res[0].qtyto+" "+res[0].fixed + "</br>" +
                           "<input type=\"button\" value=\"Anpassen\" href=\"#\"  style=\"cursor:pointer;\" onclick=\"submitCommandFormParameter('DEFAULT', frmMain.inpLastFieldChanged, 'QtyOrdered', false, null, '../ad_callouts/SL_Order_Amt.html', 'hiddenFrame', null, null, true); return false;\" class=\"LabelLink\">"
                         ) + "\"),");
-    	    }
-    		else
-    		{
-            resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS
-            (
-              Utility.messageBD(this, "ZSMP_PurchaseDefault",        vars.getLanguage()) + ":" +  "</br></br>" + 
-              Utility.messageBD(this, "ZSMP_PurchaseDefault_QtyStd", vars.getLanguage()) + " = " + qtyPurchaseStd.toString() + "</br>" + 
-              Utility.messageBD(this, "ZSMP_PurchaseDefault_QtyMin", vars.getLanguage()) + " = " + qtyPurchaseMin.toString() + "</br>" +
-              Utility.messageBD(this, "ZSMP_PurchaseDefault_IsMult", vars.getLanguage()) + " = " + qtyPurchaseIsMultiple.toString() + "</br>" +
-              Utility.messageBD(this, "ZSMP_PurchaseDefault_Qty",    vars.getLanguage()) + " = " + qtyPurchase.toString() + "  "  + // "</br>" +
-              "<input type=\"button\" value=\"Anpassen\" href=\"#\"  style=\"cursor:pointer;\" onclick=\"submitCommandFormParameter('DEFAULT', frmMain.inpLastFieldChanged, 'QtyOrdered', false, null, '../ad_callouts/SL_Order_Amt.html', 'hiddenFrame', null, null, true); return false;\" class=\"LabelLink\">"
-            ) + "\"),");
-          } 
+            if(elr_isDataAvailable())
+            {
+            	resultado.append(FormatUtilities.replaceJS(Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) + elr_buildPriceAdString()));
+            }
     		}
-          else {
+          else 
+          {
             resultado.append("new Array('MESSAGE', \"" + "\"),"); // reset Message, reset MessageBox
           }
         } 
@@ -361,5 +352,22 @@ public class SL_Order_Amt  extends ProductTextHelper  {
     PrintWriter out = response.getWriter();
     out.println(xmlDocument.print());
     out.close();
+  }
+  //ELREHA GmbH > check for data function
+  public boolean elr_isDataAvailable()
+  {
+	  if(res.length > 0 && res != null)
+		  return true;
+	  else
+		  return false;
+  }
+  public String elr_buildPriceAdString()
+  {
+	  String resultat = "";
+	  for(int i=0;i<res.length;i++)
+	  {
+		  resultat += res[i].qtyfrom + "\t" + res[i].qtyto + "\t" + res[i].fixed + "</br>";
+	  }
+	  return resultat;
   }
 }
