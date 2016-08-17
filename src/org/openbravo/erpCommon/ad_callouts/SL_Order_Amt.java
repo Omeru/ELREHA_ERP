@@ -28,6 +28,7 @@ import org.openz.controller.callouts.CalloutStructure;
 public class SL_Order_Amt  extends ProductTextHelper  {
   private static final long serialVersionUID = 1L;
   public SLOrderElrehaData[] res;
+  public String elr_message;
 
   private static final BigDecimal ZERO = new BigDecimal(0.0);
 
@@ -149,6 +150,11 @@ public class SL_Order_Amt  extends ProductTextHelper  {
     
     // ELREHA GmbH > Some message tests!
      res = SLOrderElrehaData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId);
+     elr_message = "";
+     if(elr_isDataAvailable())
+     {
+     	elr_message = "</br>" + Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) + ":</br>" + elr_buildPriceAdString();
+     }
    
     // FW: Use discount?
 	if (strChanged.equals("inpcancelpricead")) {
@@ -254,11 +260,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
                           Utility.messageBD(this, "ZSMP_PurchaseDefault_IsMult", vars.getLanguage()) + " = " + qtyPurchaseIsMultiple.toString() + "</br>" +
                           Utility.messageBD(this, "ZSMP_PurchaseDefault_Qty",    vars.getLanguage()) + " = " + qtyPurchase.toString() + "  "  +  "</br>" +
                           "<input type=\"button\" value=\"Anpassen\" href=\"#\"  style=\"cursor:pointer;\" onclick=\"submitCommandFormParameter('DEFAULT', frmMain.inpLastFieldChanged, 'QtyOrdered', false, null, '../ad_callouts/SL_Order_Amt.html', 'hiddenFrame', null, null, true); return false;\" class=\"LabelLink\">"
-                        ) + "\"),");
-            if(elr_isDataAvailable())
-            {
-            	resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) + elr_buildPriceAdString()) + "\"),");
-            }
+                        ) + elr_message + "\"),");
     		}
           else 
           {
