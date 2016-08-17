@@ -18,6 +18,9 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
   public String priceprecision;
   public String enforcepricelimit;
   public String mPricelistId;
+  public String qty_from;
+  public String qty_to;
+  public String fixed;
 
   public String getInitRecordNumber() {
     return InitRecordNumber;
@@ -32,6 +35,12 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
       return enforcepricelimit;
     else if (fieldName.equalsIgnoreCase("m_pricelist_id") || fieldName.equals("mPricelistId"))
       return mPricelistId;
+    else if (fieldName.equalsIgnoreCase("qty_from"))
+        return qty_from;
+    else if (fieldName.equalsIgnoreCase("qty_to"))
+        return qty_to;
+    else if (fieldName.equalsIgnoreCase("fixed"))
+        return fixed;
    else {
      log4j.debug("Field does not exist: " + fieldName);
      return null;
@@ -75,6 +84,9 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
         objectSLOrderAmtData.priceprecision = UtilSql.getValue(result, "priceprecision");
         objectSLOrderAmtData.enforcepricelimit = UtilSql.getValue(result, "enforcepricelimit");
         objectSLOrderAmtData.mPricelistId = UtilSql.getValue(result, "m_pricelist_id");
+        objectSLOrderAmtData.qty_from = UtilSql.getValue(result, "qty_from");
+        objectSLOrderAmtData.qty_to = UtilSql.getValue(result, "qty_to");
+        objectSLOrderAmtData.fixed = UtilSql.getValue(result, "fixed");
         objectSLOrderAmtData.InitRecordNumber = Integer.toString(firstRegister);
         vector.addElement(objectSLOrderAmtData);
         if (countRecord >= numberRegisters && numberRegisters != 0) {
@@ -400,52 +412,9 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
     }
     return(strReturn);
   }
-  public static String[] mrp_elr_getPriceAd(ConnectionProvider connectionProvider, String mProductId, String cBpartnerId) throws ServletException 
+  public static SLOrderAmtData[] mrp_elr_getPriceAd(ConnectionProvider connectionProvider, String mProductId, String cBpartnerId) throws ServletException 
   {
-	  	String strSql = "SELECT qty_from, qty_to, fixed from m_offer_v WHERE m_product_id = ? AND c_bpartner_id = ?";
-	    ResultSet result;
-	    String strReturn = "";
-	    PreparedStatement st = null;
-	    int count = 1;
-	    int iParameter = 0;
-	    try 
-	    {
-	      st = connectionProvider.getPreparedStatement(strSql);
-	      iParameter++; UtilSql.setValue(st, iParameter, 12, null, mProductId);
-	      iParameter++; UtilSql.setValue(st, iParameter, 12, null, cBpartnerId);
-	      result = st.executeQuery();
-	      while(result.next())
-	      {
-	    	  if(!result.wasNull())
-	    	  {
-	    		  strReturn += UtilSql.getValue(result, "total");
-	    		  strReturn +="</br>";
-	    		  count++;
-	    	  }
-	    	  else
-	    		  strReturn += ";NULL";
-	      }
-	      result.close();
-	    } 
-	    catch(SQLException e)
-	    {
-	      log4j.error("SQL error in query: " + strSql + "Exception:"+ e);
-	      throw new ServletException("@CODE=" + e.getSQLState() + "@" + e.getMessage());
-	    } catch(Exception ex)
-	    {
-	      log4j.error("Exception in query: " + strSql + "Exception:"+ ex);
-	      throw new ServletException("@CODE=@" + ex.getMessage());
-	    } finally 
-	    {
-	      try 
-	      {
-	        connectionProvider.releasePreparedStatement(st);
-	      } catch(Exception ignore)
-	      {
-	        ignore.printStackTrace();
-	      }
-	    }
-	    return("      "+count);
-	    //return(strReturn);
+	    SLOrderAmtData[] strReturn = null;
+	    return(strReturn);
 	  }
 }
