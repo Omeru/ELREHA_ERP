@@ -18,8 +18,8 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
   public String priceprecision;
   public String enforcepricelimit;
   public String mPricelistId;
-  public String qty_from;
-  public String qty_to;
+  public String qtyFrom;
+  public String qtyTo;
   public String fixed;
 
   public String getInitRecordNumber() {
@@ -36,9 +36,9 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
     else if (fieldName.equalsIgnoreCase("m_pricelist_id") || fieldName.equals("mPricelistId"))
       return mPricelistId;
     else if (fieldName.equalsIgnoreCase("qty_from"))
-        return qty_from;
+        return qtyFrom;
     else if (fieldName.equalsIgnoreCase("qty_to"))
-        return qty_to;
+        return qtyTo;
     else if (fieldName.equalsIgnoreCase("fixed"))
         return fixed;
    else {
@@ -411,7 +411,7 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
   }
   public static SLOrderAmtData[] mrp_elr_getPriceAd(ConnectionProvider connectionProvider, String mProductId, String cBpartnerId) throws ServletException 
   {
-	    SLOrderAmtData[] strReturn = null;
-	    return(strReturn);
+	  SLOrderAmtData[] strReturn = null;
+	  return(strReturn);
 	  }
 }
