@@ -257,7 +257,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
                         ) + "\"),");
             if(elr_isDataAvailable())
             {
-            	resultado.append(FormatUtilities.replaceJS(Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) + elr_buildPriceAdString()));
+            	resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) + elr_buildPriceAdString()) + "\"),");
             }
     		}
           else 
