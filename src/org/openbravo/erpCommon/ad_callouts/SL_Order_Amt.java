@@ -243,9 +243,9 @@ public class SL_Order_Amt  extends ProductTextHelper  {
             BigDecimal qtyPurchaseStd = new BigDecimal(SLOrderAmtData.mrp_getpo_qtystd(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
             BigDecimal qtyPurchaseMin = new BigDecimal(SLOrderAmtData.mrp_getpo_qtymin(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
             String qtyPurchaseIsMultiple = new String(SLOrderAmtData.mrp_getpo_ismultipleofminimumqty(this, strProduct, dataOrder[0].cBpartnerId,strOrderUOM,strMManufacturerID));
-    		if(SLOrderAmtData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId) != null && SLOrderAmtData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId).length > 0)
+    		if(SLOrderAmtData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId).length()>0)
     	    {
-    			SLOrderAmtData[] res = SLOrderAmtData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId);
+    			String res = SLOrderAmtData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId);
                 resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS
                         (
                           Utility.messageBD(this, "ZSMP_PurchaseDefault",        vars.getLanguage()) + ":" +  "</br></br>" + 
@@ -253,7 +253,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
                           Utility.messageBD(this, "ZSMP_PurchaseDefault_QtyMin", vars.getLanguage()) + " = " + qtyPurchaseMin.toString() + "</br>" +
                           Utility.messageBD(this, "ZSMP_PurchaseDefault_IsMult", vars.getLanguage()) + " = " + qtyPurchaseIsMultiple.toString() + "</br>" +
                           Utility.messageBD(this, "ZSMP_PurchaseDefault_Qty",    vars.getLanguage()) + " = " + qtyPurchase.toString() + "  "  +  "</br>" +
-                          Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) + ":</br>" + res[0] + "</br>" +
+                          Utility.messageBD(this, "elr_TEST_MESSAGE", vars.getLanguage()) + ":</br>" + res + "</br>" +
                           "<input type=\"button\" value=\"Anpassen\" href=\"#\"  style=\"cursor:pointer;\" onclick=\"submitCommandFormParameter('DEFAULT', frmMain.inpLastFieldChanged, 'QtyOrdered', false, null, '../ad_callouts/SL_Order_Amt.html', 'hiddenFrame', null, null, true); return false;\" class=\"LabelLink\">"
                         ) + "\"),");
     	    }
