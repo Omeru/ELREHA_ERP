@@ -18,6 +18,7 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
   public String priceprecision;
   public String enforcepricelimit;
   public String mPricelistId;
+  public String test;
 
   public String getInitRecordNumber() {
     return InitRecordNumber;
@@ -32,6 +33,8 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
       return enforcepricelimit;
     else if (fieldName.equalsIgnoreCase("m_pricelist_id") || fieldName.equals("mPricelistId"))
       return mPricelistId;
+    else if (fieldName.equalsIgnoreCase("test"))
+        return test;
    else {
      log4j.debug("Field does not exist: " + fieldName);
      return null;
