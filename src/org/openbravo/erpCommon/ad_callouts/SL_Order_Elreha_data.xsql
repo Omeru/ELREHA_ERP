@@ -23,14 +23,6 @@
 
 
 <SqlClass name="SLOrderElrehaData" package="org.openbravo.erpCommon.ad_callouts">
-  <SqlMethod name="select" type="preparedStatement" return="multiple">
-    <SqlMethodComment></SqlMethodComment>
-    <Sql>
-		SELECT qty_from as qtyFrom, qty_to as qtyTo, fixed as fixed from m_offer_v WHERE m_product_id = ? AND c_bpartner_id = ?
-    </Sql>
-    <Parameter name="mProductId"/>
-    <Parameter name="cBpartnerId"/>
-  </SqlMethod>
   <SqlMethod name="mrp_elr_getPriceAd" type="preparedStatement" return="multiple">
     <SqlMethodComment></SqlMethodComment>
     <Sql>

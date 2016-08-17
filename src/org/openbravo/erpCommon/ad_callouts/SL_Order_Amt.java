@@ -147,6 +147,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
 
 
     SLOrderProductData[] dataOrder = SLOrderProductData.select(this, strCOrderId);
+    //SLOrderElrehaData[] testdata = SLOrderElrehaData.select(this, strProduct, dataOrder[0].cBpartnerId);
    
     // FW: Use discount?
 	if (strChanged.equals("inpcancelpricead")) {
