@@ -350,7 +350,6 @@ public class SL_Order_Amt  extends ProductTextHelper  {
     if (lineNetAmt.scale() > StdPrecision)
       lineNetAmt = lineNetAmt.setScale(StdPrecision, BigDecimal.ROUND_HALF_UP);
     resultado.append("new Array(\"inplinenetamt\", " + lineNetAmt.toString() + ")");
-    resultado.append(");");
     if(!elr_msg_flag && elr_isDataAvailable())
     {
         resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS
@@ -358,6 +357,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
                 Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) + ":</br>" + elr_buildPriceAdString()
                 )+ "\"),");
     }
+    resultado.append(");");
     xmlDocument.setParameter("array", resultado.toString());
     xmlDocument.setParameter("frameName", "appFrame");
     response.setContentType("text/html; charset=UTF-8");
