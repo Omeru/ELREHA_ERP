@@ -18,10 +18,6 @@
  ************************************************************************
 -->
 
-
-
-
-
 <SqlClass name="SLOrderElrehaData" package="org.openbravo.erpCommon.ad_callouts">
   <SqlMethod name="mrp_elr_getPriceAd" type="preparedStatement" return="multiple">
     <SqlMethodComment></SqlMethodComment>
