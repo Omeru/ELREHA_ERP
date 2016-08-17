@@ -409,9 +409,9 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
     }
     return(strReturn);
   }
-  public static String mrp_elr_getPriceAd(ConnectionProvider connectionProvider, String mProductId, String cBpartnerId) throws ServletException 
+  public static SLOrderAmtData[] mrp_elr_getPriceAd(ConnectionProvider connectionProvider, String mProductId, String cBpartnerId) throws ServletException 
   {
-	  String strReturn = "";
+	  SLOrderAmtData[] strReturn = null;
 	  return(strReturn);
 	  }
 }
