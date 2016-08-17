@@ -84,9 +84,6 @@ static Logger log4j = Logger.getLogger(SLOrderAmtData.class);
         objectSLOrderAmtData.priceprecision = UtilSql.getValue(result, "priceprecision");
         objectSLOrderAmtData.enforcepricelimit = UtilSql.getValue(result, "enforcepricelimit");
         objectSLOrderAmtData.mPricelistId = UtilSql.getValue(result, "m_pricelist_id");
-        objectSLOrderAmtData.qty_from = UtilSql.getValue(result, "qty_from");
-        objectSLOrderAmtData.qty_to = UtilSql.getValue(result, "qty_to");
-        objectSLOrderAmtData.fixed = UtilSql.getValue(result, "fixed");
         objectSLOrderAmtData.InitRecordNumber = Integer.toString(firstRegister);
         vector.addElement(objectSLOrderAmtData);
         if (countRecord >= numberRegisters && numberRegisters != 0) {
