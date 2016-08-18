@@ -1456,7 +1456,7 @@ public class Utility {
         message = Utility.parseTranslation(conn, vars, vars.getLanguage(), message);
       myMessage.setType(type);
       myMessage.setTitle(title);
-      myMessage.setMessage("!IWAN!" +message + ((!message.equals("") && errorPos != -1) ? " <br> " : "")
+      myMessage.setMessage(message + ((!message.equals("") && errorPos != -1) ? " <br> " : "")
           + myMessage.getMessage());
     }
     return myMessage;
