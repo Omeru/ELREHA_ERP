@@ -434,11 +434,9 @@ vars.getRequestGlobalVariable("inpParamMovementDate_f", tabId + "|paramMovementD
           
           ProcessBundle bundle = ProcessBundle.pinstance(pinstance, vars, this);
           new ProcessRunner(bundle).execute(this);
-          
           PInstanceProcessData[] pinstanceData = PInstanceProcessData.select(this, pinstance);
-          myMessage = Utility.getProcessInstanceMessage(this, vars, pinstanceData);
           //TODO!!!
-          myMessage.setMessage("IWAN");
+          myMessage = Utility.getProcessInstanceMessage(this, vars, pinstanceData);
         } catch (ServletException ex) {
           myMessage = Utility.translateError(this, vars, vars.getLanguage(), ex.getMessage());
           if (!myMessage.isConnectionAvailable()) {
@@ -469,6 +467,7 @@ vars.getRequestGlobalVariable("inpParamMovementDate_f", tabId + "|paramMovementD
           
           PInstanceProcessData[] pinstanceData = PInstanceProcessData.select(this, pinstance);
           myMessage = Utility.getProcessInstanceMessage(this, vars, pinstanceData);
+          myMessage.setMessage("IWAN");
         } catch (ServletException ex) {
           myMessage = Utility.translateError(this, vars, vars.getLanguage(), ex.getMessage());
           if (!myMessage.isConnectionAvailable()) {
