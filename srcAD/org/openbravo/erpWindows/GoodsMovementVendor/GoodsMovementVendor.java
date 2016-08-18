@@ -442,7 +442,7 @@ PInstanceProcessData.insertPInstanceParam(this, pinstance, "10", "M_PriceList_Ve
           if (!myMessage.isConnectionAvailable()) {
             bdErrorConnection(response);
             return;
-          } else vars.setMessage(tabId, myMessage);
+          } else vars.setMessage(tabId, myMessage); //TODO
         }
         //close popup
         if (myMessage!=null) {
@@ -810,7 +810,7 @@ String strParamMovementDate_f = vars.getSessionValue(tabId + "|paramMovementDate
       if (myMessage!=null) {
         xmlDocument.setParameter("messageType", myMessage.getType());
         xmlDocument.setParameter("messageTitle", myMessage.getTitle());
-        xmlDocument.setParameter("messageMessage", myMessage.getMessage());
+        xmlDocument.setParameter("messageMessage", myMessage.getMessage()+"!IWAN!");
       }
     }
 

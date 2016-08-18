@@ -355,8 +355,7 @@ public class MaterialReceiptPending extends HttpSecureAppServlet {
         }
         myMessageAux = mInoutPost(conn, vars, strmInoutId,strLastOrgId);
         strMessageResult = strmInoutId;
-        //Additional=strDocumentno;
-        Additional = "10000451";
+        Additional=strDocumentno;
         if (strMessageType.equals("Success"))
           strMessageType = myMessageAux.getType();
         else if (strMessageType.equals("Warning") && myMessageAux.getType().equals("Error"))
