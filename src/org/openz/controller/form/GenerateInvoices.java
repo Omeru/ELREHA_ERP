@@ -169,8 +169,6 @@ public class GenerateInvoices  extends HttpSecureAppServlet {
             try {
               PInstanceProcessData[] pinstanceData = PInstanceProcessData.select(this, pinstance);
               myMessage = Utility.getProcessInstanceMessage(this, vars, pinstanceData);
-              //TODO!
-              myMessage.setMessage("IWAN");
             } catch (Exception e) {
               myMessage = Utility.translateError(this, vars, vars.getLanguage(), e.getMessage());
               e.printStackTrace();

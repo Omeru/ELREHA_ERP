@@ -170,7 +170,8 @@ public class GenerateInvoicesmanual extends HttpSecureAppServlet {
       
       if (pinstanceData != null && pinstanceData.length > 0 && pinstanceData[0].result.equals("1")) {
         if (!pinstanceData[0].errormsg.equals("")) {
-          message = pinstanceData[0].errormsg;
+          //message = pinstanceData[0].errormsg;
+        	message = "IWAN";
           myMessage.setType("Success");
           myMessage.setTitle(Utility.messageBD(this, "Success", vars.getLanguage()));
           if (message.startsWith("@") && message.endsWith("@")) {
