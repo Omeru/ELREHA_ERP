@@ -408,7 +408,7 @@ vars.getRequestGlobalVariable("inpParamMovementDate_f", tabId + "|paramMovementD
         String strClient = vars.getSessionValue("button109.strClient");
         
         String strdocstatus = vars.getSessionValue("button109.inpdocstatus");
-String stradTableId = "319";
+        String stradTableId = "319";
 
         if ((org.openbravo.erpCommon.utility.WindowAccessData.hasReadOnlyAccess(this, vars.getRole(), tabId)) || !(Utility.isElementInList(Utility.getContext(this, vars, "#User_Client", windowId, accesslevel),strClient)  && Utility.isElementInList(Utility.getContext(this, vars, "#User_Org", windowId, accesslevel),strOrg))){
           OBError myError = Utility.translateError(this, vars, vars.getLanguage(), Utility.messageBD(this, "NoWriteAccess", vars.getLanguage()));
@@ -429,7 +429,7 @@ String stradTableId = "319";
           String pinstance = SequenceIdData.getUUID();
           PInstanceProcessData.insertPInstance(this, pinstance, "154", (("M_InOut_ID".equalsIgnoreCase("AD_Language"))?"0":strM_InOut_ID), strProcessing, vars.getUser(), vars.getClient(), vars.getOrg());
           String strmPricelistVersionId = vars.getStringParameter("inpmPricelistVersionId");
-PInstanceProcessData.insertPInstanceParam(this, pinstance, "10", "M_PriceList_Version_ID", strmPricelistVersionId, vars.getClient(), vars.getOrg(), vars.getUser());
+          PInstanceProcessData.insertPInstanceParam(this, pinstance, "10", "M_PriceList_Version_ID", strmPricelistVersionId, vars.getClient(), vars.getOrg(), vars.getUser());
 
           
           ProcessBundle bundle = ProcessBundle.pinstance(pinstance, vars, this);
@@ -810,7 +810,7 @@ String strParamMovementDate_f = vars.getSessionValue(tabId + "|paramMovementDate
       if (myMessage!=null) {
         xmlDocument.setParameter("messageType", myMessage.getType());
         xmlDocument.setParameter("messageTitle", myMessage.getTitle());
-        xmlDocument.setParameter("messageMessage", myMessage.getMessage()+"!IWAN!");
+        xmlDocument.setParameter("messageMessage", myMessage.getMessage());
       }
     }
 

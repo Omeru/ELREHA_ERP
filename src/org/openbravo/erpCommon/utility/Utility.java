@@ -1442,7 +1442,8 @@ public class Utility {
             + message.substring(errorPos + 7));
         if (log4j.isDebugEnabled())
           log4j.debug("Error Message returned: " + myMessage.getMessage());
-        if (message.substring(errorPos + 7).equals(myMessage.getMessage())) {
+        if (message.substring(errorPos + 7).equals(myMessage.getMessage())) 
+        {
           myMessage.setMessage(parseTranslation(conn, vars, vars.getLanguage(), myMessage
               .getMessage()));
         }
@@ -1455,7 +1456,7 @@ public class Utility {
         message = Utility.parseTranslation(conn, vars, vars.getLanguage(), message);
       myMessage.setType(type);
       myMessage.setTitle(title);
-      myMessage.setMessage(message + ((!message.equals("") && errorPos != -1) ? " <br> " : "")
+      myMessage.setMessage("!IWAN!" +message + ((!message.equals("") && errorPos != -1) ? " <br> " : "")
           + myMessage.getMessage());
     }
     return myMessage;
