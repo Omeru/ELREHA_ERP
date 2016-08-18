@@ -355,7 +355,8 @@ public class MaterialReceiptPending extends HttpSecureAppServlet {
         }
         myMessageAux = mInoutPost(conn, vars, strmInoutId,strLastOrgId);
         strMessageResult = strmInoutId;
-        Additional=strDocumentno;
+        //Additional=strDocumentno;
+        Additional = "10000451";
         if (strMessageType.equals("Success"))
           strMessageType = myMessageAux.getType();
         else if (strMessageType.equals("Warning") && myMessageAux.getType().equals("Error"))
@@ -370,8 +371,7 @@ public class MaterialReceiptPending extends HttpSecureAppServlet {
       else if (strMessageType.equals("Warning"))
         myMessage.setMessage(Utility.messageBD(this, "CheckCNR",vars.getLanguage())+strWindowName+" "+MaterialReceiptPendingData.MInoutSNRLink(this,strMessageResult,Additional)+" "+ myMessageAux.getMessage());
       else
-    	  myMessage.setMessage(strWindowName+" "+Utility.messageBD(this, "Created",vars.getLanguage()) + " " + MaterialReceiptPendingData.MInoutLink(this,strMessageResult,Additional)+" "+ "!TEST!");
-      //myMessage.setMessage(strWindowName+" "+Utility.messageBD(this, "Created",vars.getLanguage()) + " " + MaterialReceiptPendingData.MInoutLink(this,strMessageResult,Additional)+" "+ myMessageAux.getMessage());
+      	myMessage.setMessage(strWindowName+" "+Utility.messageBD(this, "Created",vars.getLanguage()) + " " + MaterialReceiptPendingData.MInoutLink(this,strMessageResult,Additional)+" "+ myMessageAux.getMessage());
     } catch (Exception e) {
       try {
         releaseRollbackConnection(conn);
