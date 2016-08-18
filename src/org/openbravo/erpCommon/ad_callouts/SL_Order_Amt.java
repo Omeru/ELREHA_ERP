@@ -268,6 +268,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
     		}
           else 
           {
+        	  //TODO uncomment this line if some messages don't work anymore xD
             //resultado.append("new Array('MESSAGE', \"" + "\"),"); // reset Message, reset MessageBox
           }
         } 

@@ -157,7 +157,7 @@ public class MaterialReceiptPending extends HttpSecureAppServlet {
       if (myMessage != null) {
         xmlDocument.setParameter("messageType", myMessage.getType());
         xmlDocument.setParameter("messageTitle", myMessage.getTitle());
-        xmlDocument.setParameter("messageMessage", myMessage.getMessage());
+        xmlDocument.setParameter("messageMessage", myMessage.getMessage()+"IWAN");
       }
     }
 
