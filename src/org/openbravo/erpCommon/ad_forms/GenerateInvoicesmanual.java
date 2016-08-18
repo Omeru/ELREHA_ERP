@@ -168,10 +168,12 @@ public class GenerateInvoicesmanual extends HttpSecureAppServlet {
       String message = "";
       myMessage.setTitle("");
       
-      if (pinstanceData != null && pinstanceData.length > 0 && pinstanceData[0].result.equals("1")) {
-        if (!pinstanceData[0].errormsg.equals("")) {
-          //message = pinstanceData[0].errormsg;
-        	message = "IWAN";
+      if (pinstanceData != null && pinstanceData.length > 0 && pinstanceData[0].result.equals("1")) 
+      {
+        if (!pinstanceData[0].errormsg.equals("")) 
+        {
+          message = pinstanceData[0].errormsg;
+          message +=" IWAN";
           myMessage.setType("Success");
           myMessage.setTitle(Utility.messageBD(this, "Success", vars.getLanguage()));
           if (message.startsWith("@") && message.endsWith("@")) {
@@ -183,28 +185,36 @@ public class GenerateInvoicesmanual extends HttpSecureAppServlet {
                   + message + "@"));
           } else
             myMessage.setMessage(Utility.parseTranslation(this, vars, vars.getLanguage(), message));
-        } else if (!pinstanceData[0].pMsg.equals("")) {
+        } 
+        else if (!pinstanceData[0].pMsg.equals("")) 
+        {
           myMessage.setType("Success");
           myMessage.setTitle(Utility.messageBD(this, "Success", vars.getLanguage()));
           message = pinstanceData[0].pMsg;
           myMessage.setMessage(Utility.parseTranslation(this, vars, vars.getLanguage(), message));
-        } else if (pinstanceData[0].result.equals("1")) {
+        } 
+        else if (pinstanceData[0].result.equals("1")) 
+        {
           myMessage.setType("Success");
           myMessage.setTitle(Utility.messageBD(this, "Success", vars.getLanguage()));
           myMessage.setMessage(Utility.messageBD(this, "Success", vars.getLanguage()));
-        } else {
+        } 
+        else 
+        {
           myMessage.setType("Error");
           myMessage.setTitle(Utility.messageBD(this, "Error", vars.getLanguage()));
           myMessage.setMessage(Utility.messageBD(this, "Error", vars.getLanguage()));
           
         }
       }
-      else {
+      else 
+      {
         myMessage.setType("Error");
         myMessage.setTitle(Utility.messageBD(this, "Error", vars.getLanguage()));
         myMessage.setMessage(pinstanceData[0].errormsg);
       }
       dummy=GenerateInvoicesmanualData.deleteerror(this,pinstance);
+      myMessage.setMessage(message+" IWAN");
       vars.setMessage("GenerateInvoicesmanual", myMessage);
  //     GenerateInvoicesmanualData.resetSelection(this, strCOrderId.equals("") ? "('0')" : strCOrderId);
       if (log4j.isDebugEnabled())
