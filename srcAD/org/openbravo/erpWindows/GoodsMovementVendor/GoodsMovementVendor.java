@@ -438,10 +438,7 @@ vars.getRequestGlobalVariable("inpParamMovementDate_f", tabId + "|paramMovementD
           PInstanceProcessData[] pinstanceData = PInstanceProcessData.select(this, pinstance);
           myMessage = Utility.getProcessInstanceMessage(this, vars, pinstanceData);
           //TODO!!!
-          if(myMessage.getType().equals("Success"))
-          {
-        	  myMessage.setMessage("IWAN");
-          }
+          myMessage.setMessage("IWAN");
         } catch (ServletException ex) {
           myMessage = Utility.translateError(this, vars, vars.getLanguage(), ex.getMessage());
           if (!myMessage.isConnectionAvailable()) {
