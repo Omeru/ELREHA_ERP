@@ -157,7 +157,7 @@ public class MaterialReceiptPending extends HttpSecureAppServlet {
       if (myMessage != null) {
         xmlDocument.setParameter("messageType", myMessage.getType());
         xmlDocument.setParameter("messageTitle", myMessage.getTitle());
-        xmlDocument.setParameter("messageMessage", myMessage.getMessage()+"IWAN");
+        xmlDocument.setParameter("messageMessage", myMessage.getMessage());
       }
     }
 
@@ -370,7 +370,8 @@ public class MaterialReceiptPending extends HttpSecureAppServlet {
       else if (strMessageType.equals("Warning"))
         myMessage.setMessage(Utility.messageBD(this, "CheckCNR",vars.getLanguage())+strWindowName+" "+MaterialReceiptPendingData.MInoutSNRLink(this,strMessageResult,Additional)+" "+ myMessageAux.getMessage());
       else
-      myMessage.setMessage(strWindowName+" "+Utility.messageBD(this, "Created",vars.getLanguage()) + " " + MaterialReceiptPendingData.MInoutLink(this,strMessageResult,Additional)+" "+ myMessageAux.getMessage());
+    	  myMessage.setMessage(strWindowName+" "+Utility.messageBD(this, "Created",vars.getLanguage()) + " " + MaterialReceiptPendingData.MInoutLink(this,strMessageResult,Additional)+" "+ "!TEST!");
+      //myMessage.setMessage(strWindowName+" "+Utility.messageBD(this, "Created",vars.getLanguage()) + " " + MaterialReceiptPendingData.MInoutLink(this,strMessageResult,Additional)+" "+ myMessageAux.getMessage());
     } catch (Exception e) {
       try {
         releaseRollbackConnection(conn);
