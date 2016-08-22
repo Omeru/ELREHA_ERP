@@ -438,7 +438,6 @@ vars.getRequestGlobalVariable("inpParamMovementDate_f", tabId + "|paramMovementD
           myMessage = Utility.getProcessInstanceMessage(this, vars, pinstanceData);
         } catch (ServletException ex) {
           myMessage = Utility.translateError(this, vars, vars.getLanguage(), ex.getMessage());
-          myMessage.setMessage("IWAN1"); //TODO1
           if (!myMessage.isConnectionAvailable()) {
             bdErrorConnection(response);
             return;
@@ -469,7 +468,6 @@ vars.getRequestGlobalVariable("inpParamMovementDate_f", tabId + "|paramMovementD
           myMessage = Utility.getProcessInstanceMessage(this, vars, pinstanceData);
         } catch (ServletException ex) {
           myMessage = Utility.translateError(this, vars, vars.getLanguage(), ex.getMessage());
-          myMessage.setMessage("IWAN2"); //TODO2
           if (!myMessage.isConnectionAvailable()) {
             bdErrorConnection(response);
             return;
@@ -808,7 +806,6 @@ String strParamMovementDate_f = vars.getSessionValue(tabId + "|paramMovementDate
     {
       OBError myMessage = vars.getMessage(tabId);
       vars.removeMessage(tabId);
-      myMessage.setMessage("IWAN3"); //TODO3
       if (myMessage!=null) {
         xmlDocument.setParameter("messageType", myMessage.getType());
         xmlDocument.setParameter("messageTitle", myMessage.getTitle());
@@ -1044,9 +1041,8 @@ String strParamMovementDate_f = vars.getSessionValue(tabId + "|paramMovementDate
         script.addHiddenfield("inpadProcessId", "154");
         script.addHiddenfield("inpKey",strM_InOut_ID);
         script.addHiddenfield("inpprocessing",strProcessing);
-        OBError myMessage = vars.getMessage("154");
+        OBError myMessage = vars.getMessage("109");
         vars.removeMessage("154");
-        myMessage.setMessage("IWAN3"); //TODO3
         if (myMessage!=null) {
           script.addMessage(this, vars, myMessage);
         }
@@ -1110,7 +1106,6 @@ String strParamMovementDate_f = vars.getSessionValue(tabId + "|paramMovementDate
         script.addHiddenfield("inpprocessing",strProcessing);
         OBError myMessage = vars.getMessage("109");
         vars.removeMessage("109");
-        myMessage.setMessage("IWAN4"); //TODO4
         if (myMessage!=null) {
           script.addMessage(this, vars, myMessage);
         }
