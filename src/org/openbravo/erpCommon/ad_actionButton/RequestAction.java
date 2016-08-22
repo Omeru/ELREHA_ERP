@@ -84,7 +84,6 @@ public class RequestAction extends HttpSecureAppServlet {
       if (pinstanceData != null && pinstanceData.length > 0) {
         if (!pinstanceData[0].errormsg.equals("")) {
           String message = pinstanceData[0].errormsg;
-          message = "IWAN";
           if (message.startsWith("@") && message.endsWith("@")) {
             message = message.substring(1, message.length() - 1);
             if (message.indexOf("@") == -1)
@@ -97,7 +96,6 @@ public class RequestAction extends HttpSecureAppServlet {
           }
         } else if (!pinstanceData[0].pMsg.equals("")) {
           String message = pinstanceData[0].pMsg;
-          message = "IWAN";
           messageResult = Utility.parseTranslation(this, vars, vars.getLanguage(), message);
         } else if (pinstanceData[0].result.equals("1")) {
           messageResult = Utility.messageBD(this, "Success", vars.getLanguage());
