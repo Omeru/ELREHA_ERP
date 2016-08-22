@@ -173,10 +173,11 @@ public class GenerateInvoicesmanual extends HttpSecureAppServlet {
         if (!pinstanceData[0].errormsg.equals("")) 
         {
           message = pinstanceData[0].errormsg;
-          message +=" IWAN";
+          message = "IWAN0";
           myMessage.setType("Success");
           myMessage.setTitle(Utility.messageBD(this, "Success", vars.getLanguage()));
-          if (message.startsWith("@") && message.endsWith("@")) {
+          if (message.startsWith("@") && message.endsWith("@")) 
+          {
             myMessage.setMessage(message.substring(1, message.length() - 1));
             if (message.indexOf("@") == -1)
               myMessage.setMessage(Utility.messageBD(this, message, vars.getLanguage()));
@@ -191,19 +192,20 @@ public class GenerateInvoicesmanual extends HttpSecureAppServlet {
           myMessage.setType("Success");
           myMessage.setTitle(Utility.messageBD(this, "Success", vars.getLanguage()));
           message = pinstanceData[0].pMsg;
+          message = "IWAN1";
           myMessage.setMessage(Utility.parseTranslation(this, vars, vars.getLanguage(), message));
         } 
         else if (pinstanceData[0].result.equals("1")) 
         {
           myMessage.setType("Success");
-          myMessage.setTitle(Utility.messageBD(this, "Success", vars.getLanguage()));
-          myMessage.setMessage(Utility.messageBD(this, "Success", vars.getLanguage()));
+          myMessage.setTitle(Utility.messageBD(this, "Success", vars.getLanguage())+"IWAN2");
+          myMessage.setMessage(Utility.messageBD(this, "Success", vars.getLanguage())+"IWAN3");
         } 
         else 
         {
           myMessage.setType("Error");
-          myMessage.setTitle(Utility.messageBD(this, "Error", vars.getLanguage()));
-          myMessage.setMessage(Utility.messageBD(this, "Error", vars.getLanguage()));
+          myMessage.setTitle(Utility.messageBD(this, "Error", vars.getLanguage())+"IWAN4");
+          myMessage.setMessage(Utility.messageBD(this, "Error", vars.getLanguage())+"IWAN5");
           
         }
       }
@@ -211,10 +213,9 @@ public class GenerateInvoicesmanual extends HttpSecureAppServlet {
       {
         myMessage.setType("Error");
         myMessage.setTitle(Utility.messageBD(this, "Error", vars.getLanguage()));
-        myMessage.setMessage(pinstanceData[0].errormsg);
+        myMessage.setMessage(pinstanceData[0].errormsg+"IWAN6");
       }
       dummy=GenerateInvoicesmanualData.deleteerror(this,pinstance);
-      myMessage.setMessage(message+" IWAN");
       vars.setMessage("GenerateInvoicesmanual", myMessage);
  //     GenerateInvoicesmanualData.resetSelection(this, strCOrderId.equals("") ? "('0')" : strCOrderId);
       if (log4j.isDebugEnabled())
@@ -306,7 +307,7 @@ public class GenerateInvoicesmanual extends HttpSecureAppServlet {
       if (myMessage != null) {
         xmlDocument.setParameter("messageType", myMessage.getType());
         xmlDocument.setParameter("messageTitle", myMessage.getTitle());
-        xmlDocument.setParameter("messageMessage", myMessage.getMessage());
+        xmlDocument.setParameter("messageMessage", myMessage.getMessage()+"IWAN7");
       }
     }
     xmlDocument.setParameter("calendar", vars.getLanguage().substring(0, 2));
