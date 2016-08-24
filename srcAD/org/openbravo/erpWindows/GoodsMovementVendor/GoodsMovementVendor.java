@@ -1041,7 +1041,7 @@ String strParamMovementDate_f = vars.getSessionValue(tabId + "|paramMovementDate
         script.addHiddenfield("inpadProcessId", "154");
         script.addHiddenfield("inpKey",strM_InOut_ID);
         script.addHiddenfield("inpprocessing",strProcessing);
-        OBError myMessage = vars.getMessage("109");
+        OBError myMessage = vars.getMessage("154");
         vars.removeMessage("154");
         if (myMessage!=null) {
           script.addMessage(this, vars, myMessage);

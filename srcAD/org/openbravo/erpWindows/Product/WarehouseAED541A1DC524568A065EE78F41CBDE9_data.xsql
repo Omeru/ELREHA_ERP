@@ -35,7 +35,8 @@ zssi_onhanqty.M_Attributesetinstance_ID,
 COALESCE(zssi_onhanqty.Isactive, 'N') AS Isactive, 
 zssi_onhanqty.Zssi_Onhanqty_ID, 
  
-        ? AS LANGUAGE 
+        ? AS LANGUAGE,
+        Requisition_Qty 
         FROM zssi_onhanqty left join (select AD_Client_ID, Name from AD_Client) table1 on (zssi_onhanqty.AD_Client_ID = table1.AD_Client_ID) left join (select AD_Org_ID, Name from AD_Org) table2 on (zssi_onhanqty.AD_Org_ID = table2.AD_Org_ID) left join (select M_Product_ID, Value, Name from M_Product) table3 on (zssi_onhanqty.M_Product_ID = table3.M_Product_ID) left join (select M_Product_ID,AD_Language, Name from M_Product_TRL) tableTRL3 on (table3.M_Product_ID = tableTRL3.M_Product_ID and tableTRL3.AD_Language = ?)  left join (select M_Warehouse_ID, Name from M_Warehouse) table4 on (zssi_onhanqty.M_Warehouse_ID = table4.M_Warehouse_ID) left join (select M_Locator_ID, Value from M_Locator) table5 on (zssi_onhanqty.M_Locator_ID = table5.M_Locator_ID) left join (select C_Uom_ID, Name from C_Uom) table6 on (zssi_onhanqty.C_Uom_ID = table6.C_Uom_ID) left join (select C_UOM_ID,AD_Language, Name from C_UOM_TRL) tableTRL6 on (table6.C_UOM_ID = tableTRL6.C_UOM_ID and tableTRL6.AD_Language = ?)  left join (select M_AttributeSetInstance_ID, Description from M_AttributeSetInstance) table7 on (zssi_onhanqty.M_Attributesetinstance_ID = table7.M_AttributeSetInstance_ID)
         WHERE 2=2 
 
@@ -181,10 +182,10 @@ zssi_onhanqty.Zssi_Onhanqty_ID,
   <SqlMethod name="insert" type="preparedStatement" return="rowCount" static="false" connection="true">
     <Sql><![CDATA[
         INSERT INTO zssi_onhanqty 
-        (AD_Client_ID, AD_Org_ID, M_Product_ID, M_Warehouse_ID, M_Locator_ID, QtyOnHand, Qtyreserved, QtyIncomming, Qtyordered, QtyInsale, Qtyinflow, Qtyoutflow, C_Uom_ID, M_Attributesetinstance_ID, Isactive, Zssi_Onhanqty_ID, created, createdby, updated, updatedBy)
-        VALUES ((?), (?), (?), (?), (?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), (?), (?), (?), (?), now(), ?, now(), ?)
+        (AD_Client_ID, AD_Org_ID, M_Product_ID, M_Warehouse_ID, M_Locator_ID, QtyOnHand, Qtyreserved, QtyIncomming, Qtyordered, QtyInsale, Qtyinflow, Qtyoutflow, C_Uom_ID, M_Attributesetinstance_ID, Isactive, Zssi_Onhanqty_ID, created, createdby, updated, updatedBy,requisition_qty)
+        VALUES ((?), (?), (?), (?), (?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), TO_NUMBER(?), (?), (?), (?), (?), now(), ?, now(), ?,TO_NUMBER(?))
     ]]></Sql>
-    <Parameter name="adClientId"></Parameter> <Parameter name="adOrgId"></Parameter> <Parameter name="mProductId"></Parameter> <Parameter name="mWarehouseId"></Parameter> <Parameter name="mLocatorId"></Parameter> <Parameter name="qtyonhand"></Parameter> <Parameter name="qtyreserved"></Parameter> <Parameter name="qtyincomming"></Parameter> <Parameter name="qtyordered"></Parameter> <Parameter name="qtyinsale"></Parameter> <Parameter name="qtyinflow"></Parameter> <Parameter name="qtyoutflow"></Parameter> <Parameter name="cUomId"></Parameter> <Parameter name="mAttributesetinstanceId"></Parameter> <Parameter name="isactive"></Parameter> <Parameter name="zssiOnhanqtyId"></Parameter> 
+    <Parameter name="adClientId"></Parameter> <Parameter name="adOrgId"></Parameter> <Parameter name="mProductId"></Parameter> <Parameter name="mWarehouseId"></Parameter> <Parameter name="mLocatorId"></Parameter> <Parameter name="qtyonhand"></Parameter> <Parameter name="qtyreserved"></Parameter> <Parameter name="qtyincomming"></Parameter> <Parameter name="qtyordered"></Parameter> <Parameter name="qtyinsale"></Parameter> <Parameter name="qtyinflow"></Parameter> <Parameter name="qtyoutflow"></Parameter> <Parameter name="cUomId"></Parameter> <Parameter name="mAttributesetinstanceId"></Parameter> <Parameter name="isactive"></Parameter> <Parameter name="zssiOnhanqtyId"><Parameter name="requisition_qty"></Parameter> 
     <Parameter name="createdby"></Parameter>
     <Parameter name="updatedby"></Parameter>
   </SqlMethod>
