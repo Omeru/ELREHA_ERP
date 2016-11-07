@@ -128,7 +128,7 @@ public class SE_Order_BPartner extends HttpSecureAppServlet {
     res = SLOrderElrehaData3.mrp_elr_getMinPreis(this, strBPartner);
     if(elr_isDataAvailable())
     {
-    	message.append(Utility.messageBD(this, "NoBPLocation", vars.getLanguage())+ ":</br>" + res[0].minvalue + "<br>" + res[0].fee);
+    	message.append(Utility.messageBD(this, "elr_minValue_and_fee", vars.getLanguage())+ ":</br>" + res[0].minvalue + "<br>" + res[0].fee);
     }
     //--------------- END ELREHA MESSAGE ------------------
     FieldProvider[] tdv = null;
