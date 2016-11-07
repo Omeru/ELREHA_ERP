@@ -28,7 +28,9 @@ import org.openz.controller.callouts.CalloutStructure;
 public class SL_Order_Amt  extends ProductTextHelper  {
   private static final long serialVersionUID = 1L;
   public SLOrderElrehaData[] res;
+  public String res2; 
   public String elr_message;
+  public String elr_message2;
 
   private static final BigDecimal ZERO = new BigDecimal(0.0);
 
@@ -155,7 +157,12 @@ public class SL_Order_Amt  extends ProductTextHelper  {
      {
      	elr_message = "</br>" + Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) + ":</br>" + elr_buildPriceAdString();
      }
-   
+     res2 = SLOrderElrehaData2.mrp_elr_getMinPreis(this, dataOrder[0].cBpartnerId);
+     if(res2.length()>0)
+     {
+      	elr_message2 = "</br>" + Utility.messageBD(this, "elr_MinPrice", vars.getLanguage()) + ":</br>" + res2;
+
+     }
     // FW: Use discount?
 	if (strChanged.equals("inpcancelpricead")) {
 		if ("Y".equals(cancelPriceAd)) {
@@ -179,12 +186,16 @@ public class SL_Order_Amt  extends ProductTextHelper  {
 	{
 		resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) ) + ":</br>" + elr_buildPriceAdString() + "\"),");
 	}
+	if(elr_message2.length()>0)
+	{
+		resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_MinPrice", vars.getLanguage()) ) + ":</br>" + res2 + "\"),");
+	}
 
     // perform link (used as button)
     if (strChanged.equals("QtyOrdered")) {
       BigDecimal qtyPurchase = new BigDecimal(SLOrderAmtData.mrp_getpo_qty(this, strProduct, dataOrder[0].cBpartnerId, OrderQTY.compareTo(BigDecimal.ZERO)==0?qtyOrdered.toString():OrderQTY.toString(),strOrderUOM,strMManufacturerID));
       resultado.append("new Array('MESSAGE', \"" + "\"),"); // reset Message, reset MessageBox
-      resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "ZSMP_PurchaseDefault_Excec", vars.getLanguage()) ) + elr_message +"\"),");
+      resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "ZSMP_PurchaseDefault_Excec", vars.getLanguage()) ) + elr_message + elr_message2 +"\"),");
       
       int stdPrecision = strPrecision.equals("") ? 0 : Integer.valueOf(strPrecision).intValue();
       String strInitUOM = SLInvoiceConversionData.initUOMId(this, strOrderUOM);
