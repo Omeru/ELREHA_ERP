@@ -123,7 +123,9 @@ public class SE_Order_BPartner extends HttpSecureAppServlet {
     if (strLocation.equals("")) {
       message.append(Utility.messageBD(this, "NoBPLocation", vars.getLanguage()));
     }
-
+    //ELREHA TEST CASE!
+    message.append(Utility.messageBD(this, "NoBPLocation", vars.getLanguage()));
+    //END TEST CASE!
     FieldProvider[] tdv = null;
     try {
       ComboTableData comboTableData = new ComboTableData(vars, this, "TABLEDIR",
