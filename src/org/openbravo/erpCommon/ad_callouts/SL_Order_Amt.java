@@ -153,6 +153,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
     // ELREHA GmbH > Some message tests!
      res = SLOrderElrehaData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId);
      elr_message = "";
+     elr_message2 = "";
      if(elr_isDataAvailable())
      {
      	elr_message = "</br>" + Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) + ":</br>" + elr_buildPriceAdString();
@@ -275,7 +276,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
                           Utility.messageBD(this, "ZSMP_PurchaseDefault_IsMult", vars.getLanguage()) + " = " + qtyPurchaseIsMultiple.toString() + "</br>" +
                           Utility.messageBD(this, "ZSMP_PurchaseDefault_Qty",    vars.getLanguage()) + " = " + qtyPurchase.toString() + "  "  +  "</br>" +
                           "<input type=\"button\" value=\"Anpassen\" href=\"#\"  style=\"cursor:pointer;\" onclick=\"submitCommandFormParameter('DEFAULT', frmMain.inpLastFieldChanged, 'QtyOrdered', false, null, '../ad_callouts/SL_Order_Amt.html', 'hiddenFrame', null, null, true); return false;\" class=\"LabelLink\">"
-                        ) + elr_message + "\"),");
+                        ) + elr_message + elr_message2 + "\"),");
     		}
           else 
           {
@@ -292,7 +293,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
                 (
                   Utility.messageBD(this, "ZSPM_PriceActual_changed",    vars.getLanguage()) + " = " + strPJS + "  "  + // "</br>" +
                   "<input type=\"button\" value=\"Anpassen\" href=\"#\"  style=\"cursor:pointer;\" onclick=\"PunktKomma("+strPriceActual+");\" class=\"LabelLink\">"
-                ) + elr_message +"\"),");  
+                ) + elr_message + elr_message2 +"\"),");  
               }
         resultado.append("new Array(\"inppriceactual\", " + priceActual.toString()  + "),");
         }
@@ -330,7 +331,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
             if (stockSecurity.compareTo(resultStock) > 0) {
               resultado.append("new Array('MESSAGE', \""
                   + FormatUtilities.replaceJS(Utility.messageBD(this, "StockLimit", vars
-                      .getLanguage())) + elr_message +"\"),");
+                      .getLanguage())) + elr_message + elr_message2 +"\"),");
             }
           } else {
             if (!strAttribute.equals("") && strAttribute != null) {
@@ -341,7 +342,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
               if (stockSecurity.compareTo(resultStock) > 0) {
                 resultado.append("new Array('MESSAGE', \""
                     + FormatUtilities.replaceJS(Utility.messageBD(this, "StockLimit", vars
-                        .getLanguage())) + elr_message +"\"),");
+                        .getLanguage())) + elr_message + elr_message2 +"\"),");
               }
             }
           }
@@ -357,7 +358,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
           && priceActual.compareTo(priceLimit) < 0)
       {
         resultado.append("new Array('MESSAGE', \""
-            + Utility.messageBD(this, "UnderLimitPrice", vars.getLanguage()) + elr_message + "\"),");
+            + Utility.messageBD(this, "UnderLimitPrice", vars.getLanguage()) + elr_message + elr_message2 + "\"),");
       }
     }
     BigDecimal lineNetAmt;
