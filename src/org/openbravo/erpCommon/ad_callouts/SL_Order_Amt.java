@@ -182,11 +182,11 @@ public class SL_Order_Amt  extends ProductTextHelper  {
 		}
 	}
 
-	if(elr_message.length()>0)
+	if(elr_message.length() > 0)
 	{
 		resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) ) + ":</br>" + elr_buildPriceAdString() + "\"),");
 	}
-	if(elr_message2.length()>0)
+	if(elr_message2.length() > 0)
 	{
 		resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_MinPrice", vars.getLanguage()) ) + ":</br>" + res2 + "\"),");
 	}
