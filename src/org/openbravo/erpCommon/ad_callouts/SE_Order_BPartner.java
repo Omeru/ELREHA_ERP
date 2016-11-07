@@ -38,6 +38,7 @@ import org.openbravo.xmlEngine.XmlDocument;
 
 public class SE_Order_BPartner extends HttpSecureAppServlet {
   private static final long serialVersionUID = 1L;
+  public SLOrderElrehaData3[] res;
 
   public void init(ServletConfig config) {
     super.init(config);
@@ -123,9 +124,13 @@ public class SE_Order_BPartner extends HttpSecureAppServlet {
     if (strLocation.equals("")) {
       message.append(Utility.messageBD(this, "NoBPLocation", vars.getLanguage()));
     }
-    //ELREHA TEST CASE!
-    message.append(Utility.messageBD(this, "NoBPLocation", vars.getLanguage()));
-    //END TEST CASE!
+    //--------------- START ELREHA MESSAGE ------------------
+    res = SLOrderElrehaData3.mrp_elr_getMinPreis(this, strBPartner);
+    if(elr_isDataAvailable())
+    {
+    	message.append(Utility.messageBD(this, "NoBPLocation", vars.getLanguage())+ ":</br>" + res[0].minvalue + "<br>" + res[0].fee);
+    }
+    //--------------- END ELREHA MESSAGE ------------------
     FieldProvider[] tdv = null;
     try {
       ComboTableData comboTableData = new ComboTableData(vars, this, "TABLEDIR",
@@ -345,5 +350,13 @@ public class SE_Order_BPartner extends HttpSecureAppServlet {
     PrintWriter out = response.getWriter();
     out.println(xmlDocument.print());
     out.close();
+  }
+  //ELREHA GmbH > check for data function
+  public boolean elr_isDataAvailable()
+  {
+	  if(res.length > 0 && res != null)
+		  return true;
+	  else
+		  return false;
   }
 }
