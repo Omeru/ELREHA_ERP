@@ -126,10 +126,10 @@ public class SE_Order_BPartner extends HttpSecureAppServlet {
     }
     //--------------- START ELREHA MESSAGE ------------------
     //elr_data = SLOrderElrehaData.mrp_elr_getMinValueAndFee(this, strBPartner);
-    //if((elr_data[0].fee!=null && elr_data[0].fee.length()>0) 
-    //		|| (elr_data[0].minvalue!=null && elr_data[0].minvalue.length()>0))
+    //if((elr_data[0].param2!=null && elr_data[0].param2.length()>0) 
+    //		|| (elr_data[0].param1!=null && elr_data[0].param1.length()>0))
     //{
-    //	message.append(Utility.messageBD(this, "elr_minValue_and_fee", vars.getLanguage())+ ":</br>" + elr_data[0].minvalue + "<br>" + elr_data[0].fee);
+    //	message.append(Utility.messageBD(this, "elr_minValue_and_fee", vars.getLanguage())+ ":</br>" + elr_data[0].param1 + "<br>" + elr_data[0].param2);
     //}
     //--------------- END ELREHA MESSAGE ------------------
     FieldProvider[] tdv = null;

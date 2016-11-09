@@ -381,7 +381,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
 //	  String resultat = "";
 //	  for(int i=0;i<elr_data.length;i++)
 //	  {
-//		  resultat += elr_data[i].qtyfrom + "\t" + elr_data[i].qtyto + "\t" + elr_data[i].fixed + "</br>";
+//		  resultat += elr_data[i].param1 + "\t" + elr_data[i].param2 + "\t" + elr_data[i].param3 + "</br>";
 //	  }
 //	  return resultat;
 //  }

@@ -22,7 +22,7 @@
   <SqlMethod name="mrp_elr_getPriceAd" type="preparedStatement" return="multiple">
     <SqlMethodComment></SqlMethodComment>
     <Sql>
-       SELECT qty_from as qtyFrom, qty_to as qtyTo, fixed as fixed from m_offer_v WHERE m_product_id = ? AND c_bpartner_id = ?
+       SELECT qty_from as param1, qty_to as param2, fixed as param3 from m_offer_v WHERE m_product_id = ? AND c_bpartner_id = ?
     </Sql>
     <Parameter name="mProductId"/>
     <Parameter name="cBpartnerId"/>
@@ -34,13 +34,11 @@
     </Sql>
     <Parameter name="cBpartnerId"/>
   </SqlMethod>
-<!--
   <SqlMethod name="mrp_elr_getMinValueAndFee" type="preparedStatement" return="multiple">
     <SqlMethodComment></SqlMethodComment>
     <Sql>
-       SELECT customfield1 as minValue, customfield2 as fee FROM c_bpartner WHERE c_bpartner_id = ?
+       SELECT customfield1 as param1, customfield2 as param1, null as param3 FROM c_bpartner WHERE c_bpartner_id = ?
     </Sql>
     <Parameter name="cBpartnerId"/>
   </SqlMethod>
--->
 </SqlClass>
