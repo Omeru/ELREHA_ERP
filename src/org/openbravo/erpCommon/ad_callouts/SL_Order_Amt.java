@@ -27,8 +27,8 @@ import org.openz.controller.callouts.CalloutStructure;
 
 public class SL_Order_Amt  extends ProductTextHelper  {
   private static final long serialVersionUID = 1L;
-  public SLOrderElrehaData[] res;
-  public String res2; 
+  public SLOrderElrehaData[] elr_data;
+  public String elr_data_str; 
   public String elr_message;
   public String elr_message2;
 
@@ -151,17 +151,17 @@ public class SL_Order_Amt  extends ProductTextHelper  {
     SLOrderProductData[] dataOrder = SLOrderProductData.select(this, strCOrderId);
     
     // ELREHA GmbH > Some message tests!
-     res = SLOrderElrehaData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId);
+     elr_data = SLOrderElrehaData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId);
      elr_message = "";
      elr_message2 = "";
-     if(elr_isDataAvailable())
+     if(elr_data.length > 0 && elr_data != null)
      {
      	elr_message = "</br>" + Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) + ":</br>" + elr_buildPriceAdString();
      }
-     res2 = SLOrderElrehaData2.mrp_elr_getMinPreis(this, dataOrder[0].cBpartnerId);
-     if(res2.length()>0)
+     elr_data_str = SLOrderElrehaData.mrp_elr_getMinPreis(this, dataOrder[0].cBpartnerId);
+     if(elr_data_str.length()>0)
      {
-      	elr_message2 = "</br>" + Utility.messageBD(this, "elr_MinPrice", vars.getLanguage()) + ":</br>" + res2;
+      	elr_message2 = "</br>" + Utility.messageBD(this, "elr_MinPrice", vars.getLanguage()) + ":</br>" + elr_data_str;
 
      }
     // FW: Use discount?
@@ -189,7 +189,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
 	}
 	if(elr_message2.length() > 0)
 	{
-		resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_MinPrice", vars.getLanguage()) ) + ":</br>" + res2 + "\"),");
+		resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_MinPrice", vars.getLanguage()) ) + ":</br>" + elr_data_str + "\"),");
 	}
 
     // perform link (used as button)
@@ -375,20 +375,13 @@ public class SL_Order_Amt  extends ProductTextHelper  {
     out.println(xmlDocument.print());
     out.close();
   }
-  //ELREHA GmbH > check for data function
-  public boolean elr_isDataAvailable()
-  {
-	  if(res.length > 0 && res != null)
-		  return true;
-	  else
-		  return false;
-  }
+  //ELREHA Stringbuilder funcion
   public String elr_buildPriceAdString()
   {
 	  String resultat = "";
-	  for(int i=0;i<res.length;i++)
+	  for(int i=0;i<elr_data.length;i++)
 	  {
-		  resultat += res[i].qtyfrom + "\t" + res[i].qtyto + "\t" + res[i].fixed + "</br>";
+		  resultat += elr_data[i].qtyfrom + "\t" + elr_data[i].qtyto + "\t" + elr_data[i].fixed + "</br>";
 	  }
 	  return resultat;
   }
