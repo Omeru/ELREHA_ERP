@@ -27,14 +27,14 @@
     <Parameter name="mProductId"/>
     <Parameter name="cBpartnerId"/>
   </SqlMethod>
-    <SqlMethod name="mrp_elr_getMinPreis" type="preparedStatement" return="String">
+  <SqlMethod name="mrp_elr_getMinPreis" type="preparedStatement" return="String">
     <SqlMethodComment></SqlMethodComment>
     <Sql>
        SELECT customfield3 FROM c_bpartner WHERE c_bpartner_id = ?
     </Sql>
     <Parameter name="cBpartnerId"/>
   </SqlMethod>
-    <SqlMethod name="mrp_elr_getMinValueAndFee" type="preparedStatement" return="multiple">
+  <SqlMethod name="mrp_elr_getMinValueAndFee" type="preparedStatement" return="multiple">
     <SqlMethodComment></SqlMethodComment>
     <Sql>
        SELECT customfield1 as minValue, customfield2 as fee FROM c_bpartner WHERE c_bpartner_id = ?
