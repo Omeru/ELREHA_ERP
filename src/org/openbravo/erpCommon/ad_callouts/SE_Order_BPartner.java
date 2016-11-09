@@ -38,7 +38,7 @@ import org.openbravo.xmlEngine.XmlDocument;
 
 public class SE_Order_BPartner extends HttpSecureAppServlet {
   private static final long serialVersionUID = 1L;
-  //public SLOrderElrehaData[] elr_data;
+  public SLOrderElrehaData[] elr_data;
 
   public void init(ServletConfig config) {
     super.init(config);
@@ -125,12 +125,12 @@ public class SE_Order_BPartner extends HttpSecureAppServlet {
       message.append(Utility.messageBD(this, "NoBPLocation", vars.getLanguage()));
     }
     //--------------- START ELREHA MESSAGE ------------------
-    //elr_data = SLOrderElrehaData.mrp_elr_getMinValueAndFee(this, strBPartner);
-    //if((elr_data[0].param2!=null && elr_data[0].param2.length()>0) 
-    //		|| (elr_data[0].param1!=null && elr_data[0].param1.length()>0))
-    //{
-    //	message.append(Utility.messageBD(this, "elr_minValue_and_fee", vars.getLanguage())+ ":</br>" + elr_data[0].param1 + "<br>" + elr_data[0].param2);
-    //}
+    elr_data = SLOrderElrehaData.mrp_elr_getMinValueAndFee(this, strBPartner);
+    if((elr_data[0].param2!=null && elr_data[0].param2.length()>0) 
+    		|| (elr_data[0].param1!=null && elr_data[0].param1.length()>0))
+    {
+    	message.append(Utility.messageBD(this, "elr_minValue_and_fee", vars.getLanguage())+ ":</br>" + elr_data[0].param1 + "<br>" + elr_data[0].param2);
+    }
     //--------------- END ELREHA MESSAGE ------------------
     FieldProvider[] tdv = null;
     try {

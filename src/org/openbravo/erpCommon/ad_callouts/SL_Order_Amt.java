@@ -27,8 +27,8 @@ import org.openz.controller.callouts.CalloutStructure;
 
 public class SL_Order_Amt  extends ProductTextHelper  {
   private static final long serialVersionUID = 1L;
-  //public SLOrderElrehaData[] elr_data;
-  //public String elr_data_str=""; 
+  public SLOrderElrehaData[] elr_data;
+  public String elr_data_str=""; 
   public String elr_message;
   public String elr_message2;
 
@@ -150,20 +150,22 @@ public class SL_Order_Amt  extends ProductTextHelper  {
 
     SLOrderProductData[] dataOrder = SLOrderProductData.select(this, strCOrderId);
     
-    // ELREHA GmbH > Some message tests!
-//     elr_data = SLOrderElrehaData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId);
-//     elr_message = "";
-//     elr_message2 = "";
-//     if(elr_data.length > 0 && elr_data != null)
-//     {
-//     	elr_message = "</br>" + Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) + ":</br>" + elr_buildPriceAdString();
-//     }
-//     elr_data_str = SLOrderElrehaData.mrp_elr_getMinPreis(this, dataOrder[0].cBpartnerId);
-//     if(elr_data_str.length()>0)
-//     {
-//      	elr_message2 = "</br>" + Utility.messageBD(this, "elr_MinPrice", vars.getLanguage()) + ":</br>" + elr_data_str;
-//
-//     }
+     // ELREHA START MESSEGE
+     elr_data = SLOrderElrehaData.mrp_elr_getPriceAd(this, strProduct, dataOrder[0].cBpartnerId);
+     elr_message = "";
+     elr_message2 = "";
+     if(elr_data.length > 0 && elr_data != null)
+     {
+     	elr_message = "</br>" + Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) + ":</br>" + elr_buildPriceAdString();
+     }
+     elr_data_str = SLOrderElrehaData.mrp_elr_getMinPreis(this, dataOrder[0].cBpartnerId);
+     if(elr_data_str.length()>0)
+     {
+      	elr_message2 = "</br>" + Utility.messageBD(this, "elr_MinPrice", vars.getLanguage()) + ":</br>" + elr_data_str;
+
+     }
+     // ELREHA END MESSEGE
+     
     // FW: Use discount?
 	if (strChanged.equals("inpcancelpricead")) {
 		if ("Y".equals(cancelPriceAd)) {
@@ -183,14 +185,14 @@ public class SL_Order_Amt  extends ProductTextHelper  {
 		}
 	}
 
-//	if(elr_message.length() > 0)
-//	{
-//		resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) ) + ":</br>" + elr_buildPriceAdString() + "\"),");
-//	}
-//	if(elr_message2.length() > 0)
-//	{
-//		resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_MinPrice", vars.getLanguage()) ) + ":</br>" + elr_data_str + "\"),");
-//	}
+	if(elr_message.length() > 0)
+	{
+		resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) ) + ":</br>" + elr_buildPriceAdString() + "\"),");
+	}
+	if(elr_message2.length() > 0)
+	{
+		resultado.append("new Array('MESSAGE', \"" + FormatUtilities.replaceJS(Utility.messageBD(this, "elr_MinPrice", vars.getLanguage()) ) + ":</br>" + elr_data_str + "\"),");
+	}
 
     // perform link (used as button)
     if (strChanged.equals("QtyOrdered")) {
@@ -376,13 +378,13 @@ public class SL_Order_Amt  extends ProductTextHelper  {
     out.close();
   }
   //ELREHA Stringbuilder funcion
-//  public String elr_buildPriceAdString()
-//  {
-//	  String resultat = "";
-//	  for(int i=0;i<elr_data.length;i++)
-//	  {
-//		  resultat += elr_data[i].param1 + "\t" + elr_data[i].param2 + "\t" + elr_data[i].param3 + "</br>";
-//	  }
-//	  return resultat;
-//  }
+  public String elr_buildPriceAdString()
+  {
+	  String resultat = "";
+	  for(int i=0;i<elr_data.length;i++)
+	  {
+		  resultat += elr_data[i].param1 + "\t" + elr_data[i].param2 + "\t" + elr_data[i].param3 + "</br>";
+	  }
+	  return resultat;
+  }
 }

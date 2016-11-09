@@ -37,7 +37,7 @@
   <SqlMethod name="mrp_elr_getMinValueAndFee" type="preparedStatement" return="multiple">
     <SqlMethodComment></SqlMethodComment>
     <Sql>
-       SELECT customfield1 as param1, customfield2 as param1, null as param3 FROM c_bpartner WHERE c_bpartner_id = ?
+       SELECT customfield1 as param1, customfield2 as param2, null as param3 FROM c_bpartner WHERE c_bpartner_id = ?
     </Sql>
     <Parameter name="cBpartnerId"/>
   </SqlMethod>
