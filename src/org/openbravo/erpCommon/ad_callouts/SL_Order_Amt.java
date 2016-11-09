@@ -28,7 +28,7 @@ import org.openz.controller.callouts.CalloutStructure;
 public class SL_Order_Amt  extends ProductTextHelper  {
   private static final long serialVersionUID = 1L;
   public SLOrderElrehaData[] elr_data;
-  public String elr_data_str; 
+  public String elr_data_str=""; 
   public String elr_message;
   public String elr_message2;
 

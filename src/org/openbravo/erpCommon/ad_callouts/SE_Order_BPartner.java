@@ -38,7 +38,7 @@ import org.openbravo.xmlEngine.XmlDocument;
 
 public class SE_Order_BPartner extends HttpSecureAppServlet {
   private static final long serialVersionUID = 1L;
-  public SLOrderElrehaData[] elr_data;
+  //public SLOrderElrehaData[] elr_data;
 
   public void init(ServletConfig config) {
     super.init(config);
