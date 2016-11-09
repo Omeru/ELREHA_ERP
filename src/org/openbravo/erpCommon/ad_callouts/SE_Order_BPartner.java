@@ -126,7 +126,8 @@ public class SE_Order_BPartner extends HttpSecureAppServlet {
     }
     //--------------- START ELREHA MESSAGE ------------------
     res = SLOrderElrehaData3.mrp_elr_getMinPreis(this, strBPartner);
-    if(elr_isDataAvailable())
+    if((res[0].fee!=null && res[0].fee.length()>0) 
+    		|| (res[0].minvalue!=null && res[0].minvalue.length()>0))
     {
     	message.append(Utility.messageBD(this, "elr_minValue_and_fee", vars.getLanguage())+ ":</br>" + res[0].minvalue + "<br>" + res[0].fee);
     }
@@ -350,13 +351,5 @@ public class SE_Order_BPartner extends HttpSecureAppServlet {
     PrintWriter out = response.getWriter();
     out.println(xmlDocument.print());
     out.close();
-  }
-  //ELREHA GmbH > check for data function
-  public boolean elr_isDataAvailable()
-  {
-	  if(res.length > 0 && res != null)
-		  return true;
-	  else
-		  return false;
   }
 }
