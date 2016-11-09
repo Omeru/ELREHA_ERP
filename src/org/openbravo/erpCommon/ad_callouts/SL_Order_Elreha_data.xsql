@@ -34,6 +34,7 @@
     </Sql>
     <Parameter name="cBpartnerId"/>
   </SqlMethod>
+<!--
   <SqlMethod name="mrp_elr_getMinValueAndFee" type="preparedStatement" return="multiple">
     <SqlMethodComment></SqlMethodComment>
     <Sql>
@@ -41,4 +42,5 @@
     </Sql>
     <Parameter name="cBpartnerId"/>
   </SqlMethod>
+-->
 </SqlClass>
