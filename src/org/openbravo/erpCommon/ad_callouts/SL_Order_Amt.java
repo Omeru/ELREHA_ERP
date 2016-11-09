@@ -158,7 +158,7 @@ public class SL_Order_Amt  extends ProductTextHelper  {
      {
      	elr_message = "</br>" + Utility.messageBD(this, "elr_PriceAdjustmentsMessage", vars.getLanguage()) + ":</br>" + elr_buildPriceAdString();
      }
-     elr_data_str = SLOrderElrehaData.mrp_elr_getMinPreis(this, dataOrder[0].cBpartnerId);
+     //elr_data_str = SLOrderElrehaData.mrp_elr_getMinPreis(this, dataOrder[0].cBpartnerId);
      if(elr_data_str.length()>0)
      {
       	elr_message2 = "</br>" + Utility.messageBD(this, "elr_MinPrice", vars.getLanguage()) + ":</br>" + elr_data_str;

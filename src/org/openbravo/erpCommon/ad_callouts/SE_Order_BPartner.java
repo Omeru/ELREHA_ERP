@@ -125,12 +125,12 @@ public class SE_Order_BPartner extends HttpSecureAppServlet {
       message.append(Utility.messageBD(this, "NoBPLocation", vars.getLanguage()));
     }
     //--------------- START ELREHA MESSAGE ------------------
-    elr_data = SLOrderElrehaData.mrp_elr_getMinValueAndFee(this, strBPartner);
-    if((elr_data[0].fee!=null && elr_data[0].fee.length()>0) 
-    		|| (elr_data[0].minvalue!=null && elr_data[0].minvalue.length()>0))
-    {
-    	message.append(Utility.messageBD(this, "elr_minValue_and_fee", vars.getLanguage())+ ":</br>" + elr_data[0].minvalue + "<br>" + elr_data[0].fee);
-    }
+    //elr_data = SLOrderElrehaData.mrp_elr_getMinValueAndFee(this, strBPartner);
+    //if((elr_data[0].fee!=null && elr_data[0].fee.length()>0) 
+    //		|| (elr_data[0].minvalue!=null && elr_data[0].minvalue.length()>0))
+    //{
+    //	message.append(Utility.messageBD(this, "elr_minValue_and_fee", vars.getLanguage())+ ":</br>" + elr_data[0].minvalue + "<br>" + elr_data[0].fee);
+    //}
     //--------------- END ELREHA MESSAGE ------------------
     FieldProvider[] tdv = null;
     try {
